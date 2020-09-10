@@ -1,4 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://projectotpm:Albrimasa.1@cluster0-xcryk.mongodb.net/test?retryWrites=true&w=majority",
+  "mongoURI": "mongodb+srv://fedepoi3:piter123@cluster0.yfrvc.mongodb.net/<dbname>?retryWrites=true&w=majority",
   "jwtSecret": "sl_mysecret"
 }
