@@ -131,8 +131,7 @@ export class GraficoFiltro extends Component {
     let array = fechastarjetasUnicasRango.sort().map((item, index) => {
       return newFilter.filter(
         ({ estado, fecha, color, equipo }) =>
-          fecha.substr(4, 4).replace("-", "").replace("-", "") ===
-          item.slice(5, 7)
+          fecha.slice(0, 7) === item.slice(0, 7)
       ).length;
     });
 
@@ -159,9 +158,7 @@ export class GraficoFiltro extends Component {
     let arrayCerradas = fechastarjetasUnicasRango.sort().map((item, index) => {
       return newFilter.filter(
         ({ estado, finReparacion, color, equipo }) =>
-          estado === "Cerrada" &&
-          finReparacion.substr(4, 4).replace("-", "").replace("-", "") ===
-            item.slice(5, 7)
+          estado === "Cerrada" && finReparacion.slice(0, 7) === item.slice(0, 7)
       ).length;
     });
 
@@ -193,8 +190,7 @@ export class GraficoFiltro extends Component {
         return newFilter.filter(
           ({ estado, finReparacion, color, equipo }) =>
             estado === "Cerrada" &&
-            finReparacion.substr(4, 4).replace("-", "").replace("-", "") ===
-              item.slice(5, 7)
+            finReparacion.slice(0, 7) === item.slice(0, 7)
         ).length;
       });
 

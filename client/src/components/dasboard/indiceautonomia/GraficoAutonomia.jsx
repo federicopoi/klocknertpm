@@ -68,8 +68,7 @@ export class GraficoAutonomia extends Component {
         ({ estado, fecha, color }) =>
           color === "Azul" &&
           estado === "Cerrada" &&
-          fecha.substr(4, 4).replace("-", "").replace("-", "") ===
-            item.slice(5, 7)
+          fecha.slice(0, 7) === item.slice(0, 7)
       ).length;
     });
 
@@ -84,8 +83,7 @@ export class GraficoAutonomia extends Component {
         ({ estado, fecha, convertida }) =>
           convertida === true &&
           estado === "Cerrada" &&
-          fecha.substr(4, 4).replace("-", "").replace("-", "") ===
-            item.slice(5, 7)
+          fecha.slice(0, 7) === item.slice(0, 7)
       ).length;
     });
 
@@ -98,9 +96,7 @@ export class GraficoAutonomia extends Component {
     let array3 = fechasTarjetasConvertidasUnicas.sort().map((item, index) => {
       return newFilter.filter(
         ({ estado, fecha }) =>
-          estado === "Cerrada" &&
-          fecha.substr(4, 4).replace("-", "").replace("-", "") ===
-            item.slice(5, 7)
+          estado === "Cerrada" && fecha.slice(0, 7) === item.slice(0, 7)
       ).length;
     });
 

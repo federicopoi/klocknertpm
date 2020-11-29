@@ -68,9 +68,7 @@ export class GraficoVerdes extends Component {
     let array = fechastarjetasUnicasRango.sort().map((item, index) => {
       return tarjetas.filter(
         ({ estado, fecha, color }) =>
-          color === "Verde" &&
-          fecha.substr(4, 4).replace("-", "").replace("-", "") ===
-            item.slice(5, 7)
+          color === "Verde" && fecha.slice(0, 7) === item.slice(0, 7)
       ).length;
     });
 
@@ -99,8 +97,7 @@ export class GraficoVerdes extends Component {
         ({ estado, finReparacion, color }) =>
           color === "Verde" &&
           estado === "Cerrada" &&
-          finReparacion.substr(4, 4).replace("-", "").replace("-", "") ===
-            item.slice(5, 7)
+          finReparacion.slice(0, 7) === item.slice(0, 7)
       ).length;
     });
 
@@ -133,8 +130,7 @@ export class GraficoVerdes extends Component {
           ({ estado, finReparacion, color }) =>
             color === "Verde" &&
             estado === "Cerrada" &&
-            finReparacion.substr(4, 4).replace("-", "").replace("-", "") ===
-              item.slice(5, 7)
+            finReparacion.slice(0, 7) === item.slice(0, 7)
         ).length;
       });
 

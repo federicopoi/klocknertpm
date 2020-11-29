@@ -68,9 +68,7 @@ export class GraficoAzules extends Component {
     let array = fechastarjetasUnicasRango.sort().map((item, index) => {
       return tarjetas.filter(
         ({ estado, fecha, color }) =>
-          color === "Azul" &&
-          fecha.substr(4, 4).replace("-", "").replace("-", "") ===
-            item.slice(5, 7)
+          color === "Azul" && fecha.slice(0, 7) === item.slice(0, 7)
       ).length;
     });
 
@@ -99,8 +97,7 @@ export class GraficoAzules extends Component {
         ({ estado, finReparacion, color }) =>
           color === "Azul" &&
           estado === "Cerrada" &&
-          finReparacion.substr(4, 4).replace("-", "").replace("-", "") ===
-            item.slice(5, 7)
+          finReparacion.slice(0, 7) === item.slice(0, 7)
       ).length;
     });
 
@@ -133,8 +130,7 @@ export class GraficoAzules extends Component {
           ({ estado, finReparacion, color }) =>
             color === "Azul" &&
             estado === "Cerrada" &&
-            finReparacion.substr(4, 4).replace("-", "").replace("-", "") ===
-              item.slice(5, 7)
+            finReparacion.slice(0, 7) === item.slice(0, 7)
         ).length;
       });
 

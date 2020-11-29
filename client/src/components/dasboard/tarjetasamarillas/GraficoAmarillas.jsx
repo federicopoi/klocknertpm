@@ -72,9 +72,7 @@ export class GraficoAmarillas extends Component {
     let array = fechastarjetasUnicasRango.sort().map((item, index) => {
       return tarjetas.filter(
         ({ estado, fecha, color }) =>
-          color === "Amarilla" &&
-          fecha.substr(4, 4).replace("-", "").replace("-", "") ===
-            item.slice(5, 7)
+          color === "Amarilla" && fecha.slice(0, 7) === item.slice(0, 7)
       ).length;
     });
 
@@ -103,8 +101,7 @@ export class GraficoAmarillas extends Component {
         ({ estado, finReparacion, color }) =>
           color === "Amarilla" &&
           estado === "Cerrada" &&
-          finReparacion.substr(4, 4).replace("-", "").replace("-", "") ===
-            item.slice(5, 7)
+          finReparacion.slice(0, 7) === item.slice(0, 7)
       ).length;
     });
 
@@ -137,8 +134,7 @@ export class GraficoAmarillas extends Component {
           ({ estado, finReparacion, color }) =>
             color === "Amarilla" &&
             estado === "Cerrada" &&
-            finReparacion.substr(4, 4).replace("-", "").replace("-", "") ===
-              item.slice(5, 7)
+            finReparacion.slice(0, 7) === item.slice(0, 7)
         ).length;
       });
 
