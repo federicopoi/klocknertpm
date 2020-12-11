@@ -24,6 +24,11 @@
     "react-select": "^3.1.0",
     "xlsx": "^0.16.2"
   },
+
+"engines": {
+  "node": "8.1.x",
+  "npm": "5.0.x"
+},
   "devDependencies": {
     "nodemon": "^2.0.3"
   },
