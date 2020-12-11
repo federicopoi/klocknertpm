@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import "./App.css";
-
 import AñadirTarjeta from "./components/añadirtarjeta/AñadirTarjeta";
 import DashBoard from "./components/dasboard/Dashboard";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import NavBar from "./components/navbar/NavBar";
 import Footer from "./components/footer/footer";
 import MisTarjetas from "./components/tarjetas/MisTarjetas";
-import LoginPage from "./auth-components/login/loginPage";
+import LoginPage from "./auth-components/login/loginpage";
 import RegisterPage from "./auth-components/register/registerpage";
 import LayoutDetalle from "./components/detalletarjeta/layout";
 import { loadUser } from "./store/actions/authActions";
