@@ -1,5 +1,5 @@
 {
-  "name": "tpm-project-mern",
+  "name": "klocknertpm",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -19,7 +19,6 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parse": "^0.1.0",
-    "cloudinary-react": "^1.6.8",
     "concurrently": "^5.2.0",
     "config": "^3.3.1",
     "express": "^4.17.1",
@@ -29,6 +28,7 @@
     "react-select": "^3.1.0",
     "xlsx": "^0.16.2"
   },
+  
   "devDependencies": {
     "nodemon": "^2.0.3"
   },
