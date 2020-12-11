@@ -13,6 +13,8 @@ export class AdminUsuarios extends Component {
   };
   render() {
     const { users } = this.props.users;
+    if (this.props.isAuthenticated === false && this.props.isLoading === false)
+      return <Redirect to="/login" />;
 
     return (
       <div>
@@ -83,6 +85,7 @@ const mapStateToProps = (state) => {
     users: state.users,
     user: state.auth.user,
     isAuthenticated: state.auth.isAuthenticated,
+    isLoading: state.auth.isLoading,
   };
 };
 export default connect(mapStateToProps, { getUsers, borrarUser })(

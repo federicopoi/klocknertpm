@@ -19,6 +19,7 @@ import {
 } from "reactstrap";
 import Select from "react-select";
 import PresetModal from "./PresetModal";
+import { Redirect } from "react-router-dom";
 
 const options = [
   { value: "numero", label: "N°" },
@@ -69,6 +70,7 @@ class MisTarjetasFiltro extends Component {
       [e.target.name]: e.target.value,
     });
   };
+
   render() {
     const { tarjetas } = this.props.tarjetas;
     const { filters } = this.props.filters;
@@ -161,7 +163,10 @@ class MisTarjetasFiltro extends Component {
       riesgoFinal: unicosRiesgoFinal,
       tipoAccion: unicosTipoAccion,
     };
-
+    if (!localStorage.token) return <Redirect to="/login" />;
+    if (this.props.user && this.props.user.role === "Operario") {
+      return <Redirect to="/login" />;
+    }
     return (
       <div>
         <div className="page-wrapper d-block">

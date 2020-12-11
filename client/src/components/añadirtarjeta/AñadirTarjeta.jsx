@@ -132,8 +132,13 @@ class AñadirTarjeta extends Component {
   };
   render() {
     if (this.props.tarjetas.agregarsuccess) {
-      return <Redirect to="/tarjetas" />;
+      return this.props.user && this.props.user.role !== "Operario" ? (
+        <Redirect to="/tarjetas" />
+      ) : (
+        <Redirect to="/" />
+      );
     }
+    if (!localStorage.token) return <Redirect to="/login" />;
 
     return (
       <div>
@@ -458,6 +463,8 @@ const mapStateToProps = (state) => {
   return {
     tarjetas: state.tarjetas,
     error: state.error,
+    user: state.auth.user,
+    isLoading: state.auth.isLoading,
   };
 };
 export default connect(mapStateToProps, {

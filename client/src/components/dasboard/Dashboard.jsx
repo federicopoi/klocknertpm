@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getTarjetas } from "../../store/actions/tarjetaActions";
+import { Redirect } from "react-router-dom";
 import {
   TabContent,
   TabPane,
@@ -38,8 +39,8 @@ class DashBoard extends Component {
   render() {
     const { tarjetas } = this.props.tarjetas;
     const { isAuthenticated, isLoading } = this.props;
-    // if (isAuthenticated === false && isLoading === false)
-    //   return <Redirect to="/login" />;
+    if (isAuthenticated === false && isLoading === false)
+      return <Redirect to="/login" />;
     return (
       <div>
         <div className="page-wrapper d-block">

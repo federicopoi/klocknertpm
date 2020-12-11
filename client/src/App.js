@@ -7,7 +7,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import NavBar from "./components/navbar/NavBar";
 import Footer from "./components/footer/footer";
 import MisTarjetas from "./components/tarjetas/MisTarjetas";
-import LoginPage from "./auth-components/login/loginpage";
+import LoginPage from "./auth-components/login/loginPage";
 import RegisterPage from "./auth-components/register/registerpage";
 import LayoutDetalle from "./components/detalletarjeta/layout";
 import { loadUser } from "./store/actions/authActions";
@@ -33,6 +33,7 @@ class App extends Component {
             <Route path="/tarjetasfiltro" component={MisTarjetasFiltro}></Route>
             <Route path="/tarjeta/:id" component={LayoutDetalle}></Route>
             <Route path="/register" component={RegisterPage}></Route>
+            <Route path="/login" component={LoginPage}></Route>
             <Footer></Footer>
           </div>
         </Switch>

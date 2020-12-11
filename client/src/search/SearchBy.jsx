@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, Input, Label, Button } from "reactstrap";
 import { getTarjetas } from "../store/actions/tarjetaActions";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 class SearchBy extends Component {
   componentDidMount() {
     this.props.getTarjetas();
@@ -15,6 +15,8 @@ class SearchBy extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
   render() {
+    if (!localStorage.token) return <Redirect to="/login" />;
+
     const { tarjetas } = this.props.tarjetas;
 
     const tarjetaFinal = tarjetas
@@ -29,8 +31,6 @@ class SearchBy extends Component {
       .map((item) => {
         return item._id;
       });
-
-    console.log(tarjetaFinal[0]);
 
     return (
       <div>
@@ -74,6 +74,8 @@ class SearchBy extends Component {
 const mapStateToProps = (state) => {
   return {
     tarjetas: state.tarjetas,
+    user: state.auth.user,
+    isLoading: state.auth.isLoading,
   };
 };
 export default connect(mapStateToProps, { getTarjetas })(SearchBy);

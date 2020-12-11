@@ -11,7 +11,7 @@ import {
 
 import { connect } from "react-redux";
 import { logout } from "../../store/actions/authActions";
-import LoginPage from "../../auth-components/login/loginpage";
+
 import { withRouter, NavLink as RRNavLink } from "react-router-dom";
 const NavBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,36 +23,55 @@ const NavBar = (props) => {
         <NavbarBrand className="font-weight-bold">EFU System</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto" navbar>
-            <NavItem>
-              <NavLink to="/" activeClassName="active" tag={RRNavLink}>
-                Dashboard
-              </NavLink>
-            </NavItem>
-
-            <NavItem>
-              <NavLink to="/tarjetas" activeClassName="active" tag={RRNavLink}>
-                Mis Tarjetas
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink to="/buscar" activeClassName="active" tag={RRNavLink}>
-                Buscar tarjeta
-              </NavLink>
-            </NavItem>
-            {props.user && props.user.role === "Admin" && (
+          {localStorage.token && (
+            <Nav className="mr-auto" navbar>
               <NavItem>
-                <NavLink to="/admin" activeClassName="active" tag={RRNavLink}>
-                  Administrar usuarios
+                <NavLink to="/" activeClassName="active" tag={RRNavLink}>
+                  Dashboard
                 </NavLink>
               </NavItem>
-            )}
-          </Nav>
+
+              {props.user && props.user.role !== "Operario" && (
+                <NavItem>
+                  <NavLink
+                    to="/tarjetas"
+                    activeClassName="active"
+                    tag={RRNavLink}
+                  >
+                    Mis Tarjetas
+                  </NavLink>
+                </NavItem>
+              )}
+              {props.user && props.user.role === "Operario" && (
+                <NavItem>
+                  <NavLink
+                    to="/agregartarjeta"
+                    activeClassName="active"
+                    tag={RRNavLink}
+                  >
+                    Agregar Tarjeta
+                  </NavLink>
+                </NavItem>
+              )}
+              <NavItem>
+                <NavLink to="/buscar" activeClassName="active" tag={RRNavLink}>
+                  Buscar tarjeta
+                </NavLink>
+              </NavItem>
+              {props.user && props.user.role === "Admin" && (
+                <NavItem>
+                  <NavLink to="/admin" activeClassName="active" tag={RRNavLink}>
+                    Administrar usuarios
+                  </NavLink>
+                </NavItem>
+              )}
+            </Nav>
+          )}
           {localStorage.token ? (
             <Nav className="ml-auto" navbar>
               <NavItem onClick={props.logout}>
                 <NavLink
-                  to="#"
+                  to="/login"
                   onClick={props.logout && refreshPage}
                   activeClassName="active"
                   tag={RRNavLink}
@@ -61,13 +80,7 @@ const NavBar = (props) => {
                 </NavLink>
               </NavItem>
             </Nav>
-          ) : (
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <LoginPage></LoginPage>
-              </NavItem>
-            </Nav>
-          )}
+          ) : null}
         </Collapse>
       </Navbar>
     </div>

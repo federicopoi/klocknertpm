@@ -101,6 +101,7 @@ export class RegisterPage extends Component {
                     <option>Seleccionar</option>
                     <option>Admin</option>
                     <option>Jefe de area</option>
+                    <option>Operario</option>
                   </Input>
 
                   <button

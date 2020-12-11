@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getTarjetas } from "../../store/actions/tarjetaActions";
+import { loadUser } from "../../store/actions/authActions";
 import { Card, CardBody, Row, Col, Table, Button, Container } from "reactstrap";
 import moment from "moment";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 const useSortableData = (items, config = null) => {
   const [sortConfig, setSortConfig] = React.useState(config);
@@ -77,13 +78,15 @@ export const TarjetasTable = (props) => {
                         </Button>
                       </Link>
                     </Col>
-                    <Col>
-                      <Link to="/tarjetasfiltro">
-                        <Button color="secondary" className="btn">
-                          Filtrar Tarjetas
-                        </Button>
-                      </Link>
-                    </Col>
+                    {props.user && props.user.role !== "Operario" && (
+                      <Col>
+                        <Link to="/tarjetasfiltro">
+                          <Button color="secondary" className="btn">
+                            Filtrar Tarjetas
+                          </Button>
+                        </Link>
+                      </Col>
+                    )}
                   </div>
                 </div>
               </Col>
@@ -274,13 +277,20 @@ export const TarjetasTable = (props) => {
 export class MisTarjetas extends Component {
   componentDidMount() {
     this.props.getTarjetas();
+    this.props.loadUser();
     window.scrollTo(0, 0);
   }
 
   render() {
+    if (this.props.isAuthenticated === false && this.props.isLoading === false)
+      return <Redirect to="/login" />;
+
     return (
       <div>
-        <TarjetasTable tarjetas={this.props.tarjetas.tarjetas} />
+        <TarjetasTable
+          tarjetas={this.props.tarjetas.tarjetas}
+          user={this.props.user}
+        />
       </div>
     );
   }
@@ -288,6 +298,9 @@ export class MisTarjetas extends Component {
 const mapStateToProps = (state) => {
   return {
     tarjetas: state.tarjetas,
+    isAuthenticated: state.auth.isAuthenticated,
+    isLoading: state.auth.isLoading,
+    user: state.auth.user,
   };
 };
-export default connect(mapStateToProps, { getTarjetas })(MisTarjetas);
+export default connect(mapStateToProps, { getTarjetas, loadUser })(MisTarjetas);
