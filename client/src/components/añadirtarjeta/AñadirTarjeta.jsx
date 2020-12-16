@@ -11,10 +11,10 @@ import {
   Alert,
 } from "reactstrap";
 import { getTarjetas } from "../../store/actions/tarjetaActions";
+import { getCampos } from "../../store/actions/camposActions";
 import { connect } from "react-redux";
 import RIModal from "./RIModal";
 import { Redirect } from "react-router-dom";
-import FileUpload from "./FileUpload";
 import {
   agregarTarjeta,
   agregarTarjetaAmarilla,
@@ -23,6 +23,7 @@ import {
 class AñadirTarjeta extends Component {
   componentDidMount() {
     this.props.getTarjetas();
+    this.props.getCampos();
   }
   state = {
     numero: "",
@@ -32,6 +33,8 @@ class AñadirTarjeta extends Component {
     prioridad: "",
     familia: "",
     maquina: "",
+    parteMaquina: "",
+    idMaquina: "",
     equipo: "",
     riesgoInicial: "",
     tipodeRiesgo: "",
@@ -39,8 +42,6 @@ class AñadirTarjeta extends Component {
     sustoExperimentado: false,
     sustoObservado: false,
     impactoAmbiente: false,
-    image: "",
-    url: "",
     msg: null,
   };
 
@@ -82,6 +83,7 @@ class AñadirTarjeta extends Component {
       detecto,
       prioridad,
       maquina,
+      parteMaquina,
       familia,
       equipo,
       sustoExperimentado,
@@ -90,7 +92,6 @@ class AñadirTarjeta extends Component {
       sugerencia,
       tipodeRiesgo,
       riesgoInicial,
-      url,
     } = this.state;
 
     // Crear Tarjeta
@@ -102,10 +103,10 @@ class AñadirTarjeta extends Component {
       prioridad,
       familia,
       maquina,
+      parteMaquina,
       equipo,
       riesgoInicial,
       tipodeRiesgo,
-      url,
     };
 
     // Crear Tarjeta Amarilla
@@ -116,6 +117,7 @@ class AñadirTarjeta extends Component {
       detecto,
       prioridad,
       maquina,
+      parteMaquina,
       equipo,
       sustoExperimentado,
       sustoObservado,
@@ -124,7 +126,6 @@ class AñadirTarjeta extends Component {
       sugerencia,
       tipodeRiesgo,
       riesgoInicial,
-      url,
     };
     this.state.color !== "Amarilla"
       ? this.props.agregarTarjeta(nuevaTarjeta)
@@ -132,14 +133,11 @@ class AñadirTarjeta extends Component {
   };
   render() {
     if (this.props.tarjetas.agregarsuccess) {
-      return this.props.user && this.props.user.role !== "Operario" ? (
-        <Redirect to="/tarjetas" />
-      ) : (
-        <Redirect to="/" />
-      );
+      return <Redirect to="/tarjetas" />;
     }
-    if (!localStorage.token) return <Redirect to="/login" />;
 
+    const { campos } = this.props.campos;
+    console.log(this.state);
     return (
       <div>
         <div className="page-wrapper d-block">
@@ -241,13 +239,29 @@ class AñadirTarjeta extends Component {
                         type="select"
                         name="maquina"
                         id="maquina"
-                        onChange={this.onChange}
+                        onChange={(e) => {
+                          const index = e.target.selectedIndex;
+                          const el = e.target.childNodes[index];
+                          const option = el.getAttribute("_id");
+                          this.setState({
+                            idMaquina: option,
+                            maquina: e.target.value,
+                          });
+                        }}
                       >
                         <option>Seleccionar</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
+                        {campos &&
+                          campos
+                            .filter(({ name, value }) => {
+                              return name === "maquina";
+                            })
+                            .map(({ name, value, _id }, index) => {
+                              return (
+                                <option key={index} _id={_id}>
+                                  {value}
+                                </option>
+                              );
+                            })}
                       </Input>
                     </FormGroup>
 
@@ -295,6 +309,27 @@ class AñadirTarjeta extends Component {
                   </Col>
                   <Col>
                     <FormGroup>
+                      <Label for="maquina">Parte de maquina *</Label>
+                      <Input
+                        type="select"
+                        name="parteMaquina"
+                        id="parteMaquina"
+                        onChange={this.onChange}
+                      >
+                        <option>Seleccionar</option>
+                        {campos &&
+                          campos
+                            .filter(({ name, value, _id }) => {
+                              return _id === this.state.idMaquina;
+                            })
+                            .map(({ parteMaquina }) => {
+                              return parteMaquina.map((item) => {
+                                return <option>{item}</option>;
+                              });
+                            })}
+                      </Input>
+                    </FormGroup>
+                    <FormGroup>
                       <Label for="equipo">Equipo Autonomo*</Label>
                       <Input
                         type="select"
@@ -303,16 +338,14 @@ class AñadirTarjeta extends Component {
                         onChange={this.onChange}
                       >
                         <option>Seleccionar</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                        <option>9</option>
-                        <option>10</option>
+                        {campos &&
+                          campos
+                            .filter(({ name, value }) => {
+                              return name === "equipo";
+                            })
+                            .map(({ name, value }, index) => {
+                              return <option key={index}>{value}</option>;
+                            })}
                       </Input>
                     </FormGroup>
 
@@ -366,7 +399,7 @@ class AñadirTarjeta extends Component {
 
                     {this.state.color !== "Amarilla" ? (
                       <FormGroup>
-                        <Label for="detecto">Tipo *</Label>
+                        <Label for="detecto">Tipo de riesgo*</Label>
                         <Input
                           type="select"
                           name="tipodeRiesgo"
@@ -374,12 +407,14 @@ class AñadirTarjeta extends Component {
                           onChange={this.onChange}
                         >
                           <option>Seleccionar</option>
-                          <option>Atrapamiento</option>
-                          <option>Corte</option>
-                          <option>Quemadura</option>
-                          <option>Deslizamiento</option>
-                          <option>Salpicadura</option>
-                          <option>Otros</option>
+                          {campos &&
+                            campos
+                              .filter(({ name, value }) => {
+                                return name === "tipo";
+                              })
+                              .map(({ name, value }, index) => {
+                                return <option key={index}>{value}</option>;
+                              })}
                         </Input>
                       </FormGroup>
                     ) : (
@@ -392,28 +427,14 @@ class AñadirTarjeta extends Component {
                           onChange={this.onChange}
                         >
                           <option>Seleccionar</option>
-                          <option>Atrapamiento</option>
-                          <option>Corte</option>
-                          <option>Quemadura</option>
-                          <option>Deslizamiento</option>
-                          <option>Salpicadura</option>
-                          <option>Otros</option>
-                          <option>Aire comprimido</option>
-                          <option>Agua</option>
-                          <option>Aceite</option>
-                          <option>Vapor</option>
-                          <option>Materia prima</option>
-                          <option>Polvo</option>
-                          <option>No tocar</option>
-                          <option>No subir</option>
-                          <option>No bajar</option>
-                          <option>No detenerse</option>
-                          <option>No acercarse</option>
-                          <option>No esforzarse</option>
-                          <option>No prejuzgar</option>
-                          <option>No equivocarse</option>
-                          <option>No exponer al hombre</option>
-                          <option>No usar registros</option>
+                          {campos &&
+                            campos
+                              .filter(({ name, value }) => {
+                                return name === "tipo";
+                              })
+                              .map(({ name, value }, index) => {
+                                return <option key={index}>{value}</option>;
+                              })}
                         </Input>
                       </FormGroup>
                     )}
@@ -433,12 +454,6 @@ class AñadirTarjeta extends Component {
                     </FormGroup>
                   </Col>
                 </Row>
-                {this.state.color !== "Seleccionar" &&
-                  this.state.color !== "" && (
-                    <FileUpload
-                      id={this.state.color + this.state.numero}
-                    ></FileUpload>
-                  )}
 
                 {this.state.msg ? (
                   <Alert color="danger" className="mt-3">
@@ -462,13 +477,13 @@ class AñadirTarjeta extends Component {
 const mapStateToProps = (state) => {
   return {
     tarjetas: state.tarjetas,
+    campos: state.campos,
     error: state.error,
-    user: state.auth.user,
-    isLoading: state.auth.isLoading,
   };
 };
 export default connect(mapStateToProps, {
   agregarTarjeta,
   agregarTarjetaAmarilla,
   getTarjetas,
+  getCampos,
 })(AñadirTarjeta);

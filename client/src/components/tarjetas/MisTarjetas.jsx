@@ -78,15 +78,6 @@ export const TarjetasTable = (props) => {
                         </Button>
                       </Link>
                     </Col>
-                    {props.user && props.user.role !== "Operario" && (
-                      <Col>
-                        <Link to="/tarjetasfiltro">
-                          <Button color="secondary" className="btn">
-                            Filtrar Tarjetas
-                          </Button>
-                        </Link>
-                      </Col>
-                    )}
                   </div>
                 </div>
               </Col>

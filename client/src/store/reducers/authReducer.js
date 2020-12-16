@@ -44,10 +44,7 @@ export default function (state = initState, action) {
     case REGISTER_SUCCESS:
       return {
         ...state,
-        ...action.payload,
         success: true,
-
-        isLoading: false,
       };
     case AUTH_ERROR:
     case LOGIN_FAIL:

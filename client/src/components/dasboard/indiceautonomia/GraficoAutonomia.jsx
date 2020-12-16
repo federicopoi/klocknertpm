@@ -3,6 +3,7 @@ import CanvasJSReact from "../canvasjs.react";
 import { Label, Input } from "reactstrap";
 import TableModalAutonomia from "../tablemodalautonomia/TableModalAutonomia";
 import { Row, Col, Card, CardBody } from "reactstrap";
+import moment from "moment";
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 var CanvasJS = CanvasJSReact.CanvasJS;
 export class GraficoAutonomia extends Component {
@@ -48,6 +49,8 @@ export class GraficoAutonomia extends Component {
     };
     const newFilter = multiFilter(tarjetas, filter);
 
+    console.log(newFilter);
+
     const arrEquipos = tarjetas.map(({ equipo }) => equipo);
     const unicosEquipos = Array.from(new Set(arrEquipos));
 
@@ -62,8 +65,24 @@ export class GraficoAutonomia extends Component {
     let fechasTarjetasConvertidas1 = new Set(fechasTarjetasConvertidas);
     const fechasTarjetasConvertidasUnicas = [...fechasTarjetasConvertidas1];
 
+    const startDate = moment(fechasTarjetasConvertidasUnicas.sort()[0]);
+    const endDate = moment(fechasTarjetasConvertidasUnicas.sort().slice(-1)[1]);
+
+    const fechastarjetasUnicasRango = [];
+
+    if (endDate.isBefore(startDate)) {
+      throw "End date must be greated than start date.";
+    }
+
+    while (startDate.isBefore(endDate)) {
+      fechastarjetasUnicasRango.push(startDate.format("YYYY-MM"));
+      startDate.add(1, "month");
+    }
+
+    console.log(fechastarjetasUnicasRango);
+
     // Numero total de tarjetas de cada mes (no acumulado)
-    let array1 = fechasTarjetasConvertidasUnicas.sort().map((item, index) => {
+    let array1 = fechastarjetasUnicasRango.sort().map((item, index) => {
       return newFilter.filter(
         ({ estado, fecha, color }) =>
           color === "Azul" &&
@@ -77,8 +96,10 @@ export class GraficoAutonomia extends Component {
       array1.slice(0, index + 1).reduce((a, b) => a + b)
     );
 
+    console.log(array1Acum);
+
     // Numero total de tarjetas de cada mes (no acumulado)
-    let array2 = fechasTarjetasConvertidasUnicas.sort().map((item, index) => {
+    let array2 = fechastarjetasUnicasRango.sort().map((item, index) => {
       return newFilter.filter(
         ({ estado, fecha, convertida }) =>
           convertida === true &&
@@ -92,8 +113,9 @@ export class GraficoAutonomia extends Component {
       array2.slice(0, index + 1).reduce((a, b) => a + b)
     );
 
+    console.log(array2Acum);
     // Numero total de tarjetas de cada mes (no acumulado)
-    let array3 = fechasTarjetasConvertidasUnicas.sort().map((item, index) => {
+    let array3 = fechastarjetasUnicasRango.sort().map((item, index) => {
       return newFilter.filter(
         ({ estado, fecha }) =>
           estado === "Cerrada" && fecha.slice(0, 7) === item.slice(0, 7)
@@ -105,18 +127,20 @@ export class GraficoAutonomia extends Component {
       array3.slice(0, index + 1).reduce((a, b) => a + b)
     );
 
+    console.log(array3Acum);
+
     // Numero total de tarjetas de cada mes (no acumulado)
-    let arrayAcumFinal = fechasTarjetasConvertidasUnicas
-      .sort()
-      .map((item, index) => {
-        return (
-          ((array1Acum[index] + array2Acum[index]) / array3Acum[index]) * 100
-        );
-      });
+    let arrayAcumFinal = fechastarjetasUnicasRango.sort().map((item, index) => {
+      return (
+        ((array1Acum[index] + array2Acum[index]) / array3Acum[index]) * 100
+      );
+    });
+
+    console.log(arrayAcumFinal);
 
     // Datos para el grafico
     const ConvertidasData = [
-      fechasTarjetasConvertidasUnicas.sort().map((item, index) => {
+      fechastarjetasUnicasRango.sort().map((item, index) => {
         return {
           x: new Date(
             parseInt(item.slice(0, 4)),

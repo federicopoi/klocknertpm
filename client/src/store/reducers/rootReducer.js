@@ -4,6 +4,7 @@ import errorReducer from "./errorReducer";
 import authReducer from "./authReducer";
 import tarjetaReducer from "./tarjetaReducer";
 import filterReducer from "./filterReducer";
+import camposReducer from "./camposReducer";
 
 export default combineReducers({
   users: usersReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   auth: authReducer,
   tarjetas: tarjetaReducer,
   filters: filterReducer,
+  campos: camposReducer,
 });

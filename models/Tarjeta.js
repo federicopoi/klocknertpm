@@ -41,6 +41,10 @@ const TarjetaSchema = new Schema(
       type: String,
       required: true,
     },
+    parteMaquina: {
+      type: String,
+      required: true,
+    },
     equipo: {
       type: String,
       required: true,

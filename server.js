@@ -5,6 +5,7 @@ const config = require("config");
 
 const tarjetas = require("./routes/api/tarjetas");
 const filters = require("./routes/api/filters");
+const campos = require("./routes/api/campos");
 const users = require("./routes/api/users");
 const auth = require("./routes/api/auth");
 const app = express();
@@ -29,6 +30,7 @@ mongoose
 // User routes
 app.use("/api/tarjetas", tarjetas);
 app.use("/api/filters", filters);
+app.use("/api/campos", campos);
 app.use("/api/users", users);
 app.use("/api/auth", auth);
 

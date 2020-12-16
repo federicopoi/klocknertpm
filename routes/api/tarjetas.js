@@ -28,6 +28,7 @@ router.post("/", (req, res) => {
     prioridad,
     familia,
     maquina,
+    parteMaquina,
     equipo,
     tipodeRiesgo,
     riesgoInicial,
@@ -43,6 +44,7 @@ router.post("/", (req, res) => {
     !prioridad ||
     !familia ||
     !maquina ||
+    !parteMaquina ||
     !equipo ||
     !tipodeRiesgo ||
     !riesgoInicial
@@ -58,6 +60,7 @@ router.post("/", (req, res) => {
     prioridad,
     familia,
     maquina,
+    parteMaquina,
     equipo,
     tipodeRiesgo,
     riesgoInicial,
@@ -78,6 +81,7 @@ router.post("/amarilla", (req, res) => {
     detecto,
     prioridad,
     maquina,
+    parteMaquina,
     equipo,
     familia,
     sustoExperimentado,
@@ -98,6 +102,7 @@ router.post("/amarilla", (req, res) => {
     !prioridad ||
     !familia ||
     !maquina ||
+    !parteMaquina ||
     !equipo ||
     !sugerencia ||
     !tipodeRiesgo ||
@@ -113,6 +118,7 @@ router.post("/amarilla", (req, res) => {
     detecto,
     prioridad,
     maquina,
+    parteMaquina,
     familia,
     equipo,
     sustoExperimentado,
@@ -136,6 +142,7 @@ router.post("/cerrar", (req, res) => {
     inicioReparacion,
     finReparacion,
     responsable,
+    areaResponsable,
     tiempoEmpleado,
     causa,
     tareaRealizada,
@@ -167,6 +174,7 @@ router.post("/cerrar", (req, res) => {
     tarjeta.inicioReparacion = inicioReparacion;
     tarjeta.finReparacion = finReparacion;
     tarjeta.responsable = responsable;
+    tarjeta.areaResponsable = areaResponsable;
     tarjeta.tiempoEmpleado = tiempoEmpleado;
     tarjeta.causa = causa;
     tarjeta.tareaRealizada = tareaRealizada;
@@ -356,4 +364,38 @@ router.post("/editarAmarilla", (req, res) => {
     res.json(tarjeta);
   });
 });
+
+// @route POST api/tickets/agregarcomentario
+// @desc Agregar comentario
+// @access Public
+router.post("/agregarcomentario", (req, res) => {
+  const { _id, comentario } = req.body;
+
+  Tarjeta.findOne({ _id }).exec((err, tarjeta) => {
+    if (err) console.log("Update Ticket  ", err);
+
+    const arr = tarjeta.comentarios;
+
+    const concatArr = arr.concat(comentario);
+    tarjeta.comentarios = concatArr;
+
+    tarjeta.save().then((tarjeta) => res.json(tarjeta));
+  });
+});
+
+// @route POST api/tickets/agregarimagen
+// @desc Agregar imagen
+// @access Public
+router.post("/agregarimagen", (req, res) => {
+  const { _id, imagenUrl } = req.body;
+
+  Tarjeta.findOne({ _id }).exec((err, tarjeta) => {
+    if (err) console.log("Update Ticket  ", err);
+
+    tarjeta.imagenUrl = imagenUrl;
+    tarjeta.save();
+    res.json(tarjeta);
+  });
+});
+
 module.exports = router;

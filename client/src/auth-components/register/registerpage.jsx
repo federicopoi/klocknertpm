@@ -37,7 +37,7 @@ export class RegisterPage extends Component {
       }
     }
     if (this.props.success) {
-      this.props.history.push("/");
+      this.props.history.push("/admin");
     }
   }
   onChange = (e) => {
@@ -81,7 +81,7 @@ export class RegisterPage extends Component {
                   </div>
 
                   <div className="form-group">
-                    <Label for="password">Password</Label>
+                    <Label for="password">Contraseña</Label>
                     <Input
                       type="password"
                       name="password"
@@ -108,7 +108,7 @@ export class RegisterPage extends Component {
                     type="submit"
                     className="btn btn-primary btn-block mt-3"
                   >
-                    Sign Up
+                    Subir
                   </button>
                   {this.state.msg ? (
                     <Alert color="danger" className="mt-3">

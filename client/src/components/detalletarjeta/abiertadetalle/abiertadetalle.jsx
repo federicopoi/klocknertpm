@@ -27,6 +27,7 @@ export class AbiertaDetalle extends Component {
                 familia,
                 fecha,
                 maquina,
+                parteMaquina,
                 equipo,
                 sugerencia,
                 tipodeRiesgo,
@@ -34,6 +35,7 @@ export class AbiertaDetalle extends Component {
                 sustoExperimentado,
                 sustoObservado,
                 impactoAmbiente,
+                planta,
                 photo,
               }) => {
                 return (
@@ -57,6 +59,18 @@ export class AbiertaDetalle extends Component {
                           <div>&nbsp;</div>
                           <h5 className="font-16 font-weight-normal">
                             {maquina}
+                          </h5>
+                        </Row>
+                        <Row className="ml-2 my-1">
+                          <h5
+                            className="font-16 font-medium mr-2"
+                            style={{ display: "block" }}
+                          >
+                            Parte de maquina:
+                          </h5>
+                          <div>&nbsp;</div>
+                          <h5 className="font-16 font-weight-normal">
+                            {parteMaquina}
                           </h5>
                         </Row>
                         <Row className="ml-2 my-1">
@@ -173,6 +187,7 @@ export class AbiertaDetalle extends Component {
                                 </h5>
                               )}
                             </Row>
+
                             <Row className="ml-2 my-1">
                               {estado === "Abierta" && (
                                 <div>

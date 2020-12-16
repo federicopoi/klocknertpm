@@ -39,6 +39,15 @@ router.post("/", (req, res) => {
       role,
     });
 
+    newUser.save().then((user) => {
+      res.json({
+        user: {
+          id: user.id,
+          email: user.email,
+          role: user.role,
+        },
+      });
+    });
     // Create salt $ hash
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
