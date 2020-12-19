@@ -21,12 +21,15 @@ class SearchBy extends Component {
 
     const tarjetaFinal = tarjetas
       .filter(({ color, numero }) => {
-        return (
-          (color === this.state.color && numero === this.state.numero) ||
-          (this.state.code === "A" && color === "Azul") ||
-          (this.state.code === "Am" && color === "Amarilla") ||
-          (this.state.code === "V" && color === "Verde")
-        );
+        return color === this.state.color && numero === this.state.numero;
+      })
+      .map((item) => {
+        return item._id;
+      });
+
+    const test = tarjetas
+      .filter(({ color, numero }) => {
+        return numero === "1" && color === "Roja";
       })
       .map((item) => {
         return item._id;

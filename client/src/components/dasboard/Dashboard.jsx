@@ -22,6 +22,7 @@ import GraficoRojas from "./tarjetasrojas/GraficoRojas";
 import GraficoAzules from "./tarjetasazules/GraficoAzules";
 import GraficoVerdes from "./tarjetasverdes/GraficoVerdes";
 import GraficoAutonomia from "./indiceautonomia/GraficoAutonomia";
+import GraficoRiesgo from "./mapasderiesgo/GraficoRiesgo";
 import GraficoFiltro from "./tarjetasfiltro/GraficoFiltro";
 
 class DashBoard extends Component {
@@ -116,6 +117,18 @@ class DashBoard extends Component {
                       this.toggle("6");
                     }}
                   >
+                    Mapas de riesgo
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    className={classnames({
+                      active: this.state.activeTab === "7",
+                    })}
+                    onClick={() => {
+                      this.toggle("7");
+                    }}
+                  >
                     Grafico personalizado
                   </NavLink>
                 </NavItem>
@@ -157,6 +170,13 @@ class DashBoard extends Component {
                   </Row>
                 </TabPane>
                 <TabPane tabId="6">
+                  <Row className="mt-3">
+                    <Col sm="12">
+                      <GraficoRiesgo tarjetas={tarjetas}></GraficoRiesgo>
+                    </Col>
+                  </Row>
+                </TabPane>
+                <TabPane tabId="7">
                   <Row className="mt-3">
                     <Col sm="12">
                       <GraficoFiltro tarjetas={tarjetas}></GraficoFiltro>
