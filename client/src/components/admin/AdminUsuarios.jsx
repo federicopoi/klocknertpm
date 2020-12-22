@@ -17,6 +17,7 @@ import CampoModal from "./camposModal";
 import CamposParteMaquinaModal from "./camposparteMaquinaModal";
 import { getUsers, borrarUser } from "../../store/actions/usersActions";
 import { borrarCampo } from "../../store/actions/camposActions";
+import VersionControlModal from "./versionControlModal";
 import {
   getCampos,
   parteMaquinaDelete,
@@ -38,6 +39,8 @@ export class AdminUsuarios extends Component {
     idMaquina: "",
     idEquipo: "",
     idTipo: "",
+    idRiesgoInicial: "",
+    idRiesgoFinal: "",
     maquina: "",
     parteMaquina: "",
   };
@@ -66,6 +69,7 @@ export class AdminUsuarios extends Component {
                       <div className="">
                         <div>
                           <h2 className="mb-3">Administrar</h2>
+                          <VersionControlModal></VersionControlModal>
                         </div>
                       </div>
 
@@ -336,6 +340,100 @@ export class AdminUsuarios extends Component {
                               onClick={this.onDeleteClickCampo.bind(
                                 this,
                                 this.state.idEquipo
+                              )}
+                              className="bg-danger border-danger ml-3"
+                            >
+                              Borrar
+                            </Button>
+                          </div>
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <div className="d-sm-flex align-items-center">
+                          <div className="">
+                            <div>
+                              <FormGroup>
+                                <Label for="equipo">Riesgo Inicial</Label>
+                                <Input
+                                  type="select"
+                                  name="riesgoInicial"
+                                  id="riesgoInicial"
+                                  onChange={(e) => {
+                                    this.setState({
+                                      idRiesgoInicial: e.target.value,
+                                    });
+                                  }}
+                                >
+                                  <option>Seleccionar</option>
+                                  {campos &&
+                                    campos
+                                      .filter(({ name }) => {
+                                        return name === "riesgoInicial";
+                                      })
+                                      .map(({ name, value, _id }) => {
+                                        return (
+                                          <option value={_id}>{value}</option>
+                                        );
+                                      })}
+                                </Input>
+                              </FormGroup>
+                            </div>
+                          </div>
+                          <div className="ml-auto d-sm-flex no-block align-items-center mb-3">
+                            <CampoModal campo="riesgoInicial"></CampoModal>
+                            <Button
+                              onClick={this.onDeleteClickCampo.bind(
+                                this,
+                                this.state.idRiesgoInicial
+                              )}
+                              className="bg-danger border-danger ml-3"
+                            >
+                              Borrar
+                            </Button>
+                          </div>
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <div className="d-sm-flex align-items-center">
+                          <div className="">
+                            <div>
+                              <FormGroup>
+                                <Label for="equipo">Riesgo Final</Label>
+                                <Input
+                                  type="select"
+                                  name="riesgoFinal"
+                                  id="riesgoFinal"
+                                  onChange={(e) => {
+                                    this.setState({
+                                      idRiesgoFinal: e.target.value,
+                                    });
+                                  }}
+                                >
+                                  <option>Seleccionar</option>
+                                  {campos &&
+                                    campos
+                                      .filter(({ name }) => {
+                                        return name === "riesgoFinal";
+                                      })
+                                      .map(({ name, value, _id }) => {
+                                        return (
+                                          <option value={_id}>{value}</option>
+                                        );
+                                      })}
+                                </Input>
+                              </FormGroup>
+                            </div>
+                          </div>
+                          <div className="ml-auto d-sm-flex no-block align-items-center mb-3">
+                            <CampoModal campo="riesgoFinal"></CampoModal>
+                            <Button
+                              onClick={this.onDeleteClickCampo.bind(
+                                this,
+                                this.state.idRiesgoFinal
                               )}
                               className="bg-danger border-danger ml-3"
                             >

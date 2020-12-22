@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { clearErrors } from "../../../store/actions/errorActions";
 import { cerrarTarjeta } from "../../../store/actions/tarjetaActions";
+import { getCampos } from "../../../store/actions/camposActions";
 import {
   Button,
   Modal,
@@ -110,7 +111,11 @@ export class CerrarTarjetaModal extends Component {
       return this.toggle();
     }
   };
+  componentDidMount() {
+    this.props.getCampos();
+  }
   render() {
+    const { campos } = this.props.campos;
     return (
       <div>
         <Button onClick={this.toggle}>Cerrar Tarjeta</Button>
@@ -162,13 +167,29 @@ export class CerrarTarjetaModal extends Component {
 
                 <Label for="detecto">Riesgo Final</Label>
                 <Input
-                  type="text"
+                  type="select"
                   name="riesgoFinal"
                   id="riesgoFinal"
                   onChange={this.onChange}
-                />
+                >
+                  <option>Seleccionar</option>
+                  {campos &&
+                    campos
+                      .filter(({ name, value }) => {
+                        return name === "riesgoFinal";
+                      })
+                      .map(({ name, value, _id }, index) => {
+                        return (
+                          <option key={index} _id={_id}>
+                            {value}
+                          </option>
+                        );
+                      })}
+                </Input>
 
-                <Label for="updaters">Tiempo empleado en horas</Label>
+                <Label for="updaters" className="mt-3">
+                  Tiempo empleado en horas
+                </Label>
                 <Input
                   onChange={this.onChange}
                   type="text"
@@ -257,8 +278,10 @@ export class CerrarTarjetaModal extends Component {
 }
 const mapStateToProps = (state) => ({
   error: state.error,
+  campos: state.campos,
 });
 export default connect(mapStateToProps, {
   clearErrors,
   cerrarTarjeta,
+  getCampos,
 })(CerrarTarjetaModal);

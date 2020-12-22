@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { clearErrors } from "../../../store/actions/errorActions";
 import { cerrarTarjetaAmarilla } from "../../../store/actions/tarjetaActions";
+import { getCampos } from "../../../store/actions/camposActions";
 import {
   Button,
   Modal,
@@ -101,7 +102,11 @@ export class CerrarTarjetaAmarillaModal extends Component {
       return this.toggle();
     }
   };
+  componentDidMount() {
+    this.props.getCampos();
+  }
   render() {
+    const { campos } = this.props.campos;
     return (
       <div>
         <Button onClick={this.toggle}>Cerrar Tarjeta</Button>
@@ -164,16 +169,31 @@ export class CerrarTarjetaAmarillaModal extends Component {
                   className="mb-2"
                 ></Input>
 
-                <Label for="updaters">Determinacion del Riesgo Final</Label>
+                <Label for="detecto">Riesgo Final</Label>
                 <Input
-                  onChange={this.onChange}
-                  type="text"
+                  type="select"
                   name="riesgoFinal"
                   id="riesgoFinal"
-                  className="mb-2"
-                ></Input>
+                  onChange={this.onChange}
+                >
+                  <option>Seleccionar</option>
+                  {campos &&
+                    campos
+                      .filter(({ name, value }) => {
+                        return name === "riesgoFinal";
+                      })
+                      .map(({ name, value, _id }, index) => {
+                        return (
+                          <option key={index} _id={_id}>
+                            {value}
+                          </option>
+                        );
+                      })}
+                </Input>
 
-                <Label for="updaters">Acciones Complementarias</Label>
+                <Label for="updaters" className="mt-3">
+                  Acciones Complementarias
+                </Label>
                 <Input
                   onChange={this.onChange}
                   type="text"
@@ -238,8 +258,10 @@ export class CerrarTarjetaAmarillaModal extends Component {
 }
 const mapStateToProps = (state) => ({
   error: state.error,
+  campos: state.campos,
 });
 export default connect(mapStateToProps, {
   clearErrors,
   cerrarTarjetaAmarilla,
+  getCampos,
 })(CerrarTarjetaAmarillaModal);

@@ -96,8 +96,6 @@ export class GraficoAutonomia extends Component {
       array1.slice(0, index + 1).reduce((a, b) => a + b)
     );
 
-    console.log(array1Acum);
-
     // Numero total de tarjetas de cada mes (no acumulado)
     let array2 = fechastarjetasUnicasRango.sort().map((item, index) => {
       return newFilter.filter(

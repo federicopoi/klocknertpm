@@ -274,11 +274,25 @@ class AñadirTarjeta extends Component {
                       </Row>
 
                       <Input
-                        type="text"
+                        type="select"
                         name="riesgoInicial"
                         id="riesgoInicial"
                         onChange={this.onChange}
-                      />
+                      >
+                        <option>Seleccionar</option>
+                        {campos &&
+                          campos
+                            .filter(({ name, value }) => {
+                              return name === "riesgoInicial";
+                            })
+                            .map(({ name, value, _id }, index) => {
+                              return (
+                                <option key={index} _id={_id}>
+                                  {value}
+                                </option>
+                              );
+                            })}
+                      </Input>
                     </FormGroup>
                     <FormGroup>
                       <Label for="detecto">Detectó *</Label>
