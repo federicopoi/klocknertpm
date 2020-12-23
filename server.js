@@ -27,6 +27,7 @@ mongoose
   })
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
+
 // User routes
 app.use("/api/tarjetas", tarjetas);
 app.use("/api/filters", filters);
