@@ -7,6 +7,7 @@ import {
   AGREGAR_TARJETA_AMARILLA,
   CERRAR_TARJETA_AMARILLA,
   EDITAR_TARJETA,
+  AGREGAR_IMAGEN,
 } from "../actions/types";
 const initState = {
   tarjetas: [],
@@ -45,6 +46,11 @@ export default function (state = initState, action) {
         tarjetas: state.tarjetas.filter(
           (tarjeta) => tarjeta._id !== action.payload
         ),
+      };
+    case AGREGAR_IMAGEN:
+      return {
+        ...state,
+        tarjetas: [action.payload],
       };
     case CARGANDO_TARJETAS:
       return {

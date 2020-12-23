@@ -69,6 +69,7 @@ class AñadirTarjeta extends Component {
     const numeroTarjeta = this.props.tarjetas.tarjetas.filter(
       ({ color }) => color === e.target.value
     );
+    console.log(numeroTarjeta.length);
     this.setState({
       [e.target.name]: e.target.value,
       numero: numeroTarjeta.length + 1,
