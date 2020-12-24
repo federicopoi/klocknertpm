@@ -59,6 +59,9 @@ const TarjetaSchema = new Schema(
     sustoExperimentado: {
       type: Boolean,
     },
+    imagenUrl: {
+      type: String,
+    },
     sustoObservado: {
       type: Boolean,
     },

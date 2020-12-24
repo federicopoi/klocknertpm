@@ -133,7 +133,9 @@ class AñadirTarjeta extends Component {
   };
   render() {
     if (this.props.tarjetas.agregarsuccess) {
-      return <Redirect to="/tarjetas" />;
+      return (
+        <Redirect to={`/tarjeta/${this.props.tarjetas.tarjetaActualId}`} />
+      );
     }
 
     const { campos } = this.props.campos;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, Row, Col } from "reactstrap";
 import QRCode from "qrcode.react";
-
+import PrintComponents from "react-print-components";
 const QRModal = (props) => {
   const [modal, setModal] = useState(false);
 
@@ -22,8 +22,17 @@ const QRModal = (props) => {
               <h4 className="mt-3">
                 Tarjeta {props.color} N°{props.numero}
               </h4>
+              <PrintComponents
+                trigger={<Button>Imprimir</Button>}
+                className="mt-3"
+              >
+                <QRCode value={link} />
+
+                <h4 className="mt-3">
+                  Tarjeta {props.color} N°{props.numero}
+                </h4>
+              </PrintComponents>
             </Col>
-            <Col></Col>
           </Row>
         </ModalBody>
       </Modal>
