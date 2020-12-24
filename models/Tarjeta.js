@@ -55,6 +55,9 @@ const TarjetaSchema = new Schema(
     tipodeRiesgo: {
       type: String,
     },
+    imagenUrl: {
+      type: String,
+    },
     // Solo en Tarjeta amarilla
     sustoExperimentado: {
       type: Boolean,
