@@ -59,6 +59,9 @@ const VersionControlModal = (props) => {
                 <div class="inside">
                   <Container>
                     <div class="entry-content">
+                      <p>
+                        &#9642; Posibilidad de adjuntar imagen a cada tarjeta.
+                      </p>
                       <p>&#9642; Tabla de mapas de riesgo agregada.</p>
                       <p>
                         &#9642; Campos dinamicos agregado, los admin pueden

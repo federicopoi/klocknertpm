@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import CanvasJSReact from "../canvasjs.react";
-import moment from "moment";
+import moment, { months } from "moment";
 import TableModal from "../tablemodal/TableModal";
 import { Col, Row, Card, CardBody, Table } from "reactstrap";
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
@@ -161,31 +161,26 @@ export class GraficoAmarillas extends Component {
     ];
 
     CanvasJS.addCultureInfo("es", {
-      decimalSeparator: ",", // Observe ToolTip Number Format
-      digitGroupSeparator: ".", // Observe axisY labels
-
+      decimalSeparator: ".",
+      digitGroupSeparator: ",",
       months: [
-        "Enero",
-        "Febrero",
-        "Marzo",
-        "Abril",
-        "Mayo",
-        "Junio",
-        "Julio",
-        "Agosto",
-        "Septiembre",
-        "Octubre",
-        "Noviembre",
-        "Diciembre",
+        "domingo",
+        "lunes",
+        "martes",
+        "miércoles",
+        "jueves",
+        "viernes",
+        "sábado",
       ],
     });
+
     const options = {
       culture: "es",
       animationEnabled: true,
       axisX: {
         valueFormatString: "MMMM",
-
         interval: 1,
+
         intervalType: "month",
       },
       axisY: {
@@ -201,6 +196,7 @@ export class GraficoAmarillas extends Component {
         tickColor: "#000000",
         labelFontColor: "#000000",
       },
+
       toolTip: {
         shared: true,
       },

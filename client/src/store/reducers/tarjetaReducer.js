@@ -49,6 +49,11 @@ export default function (state = initState, action) {
           (tarjeta) => tarjeta._id !== action.payload
         ),
       };
+    case AGREGAR_IMAGEN:
+      return {
+        ...state,
+        tarjetas: [action.payload],
+      };
     case CARGANDO_TARJETAS:
       return {
         ...state,
