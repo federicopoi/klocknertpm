@@ -235,7 +235,7 @@ export class GraficoAzules extends Component {
     return (
       <div>
         <Row>
-          <Col lg={4} md={12} sm={12}>
+          <Col lg={5} md={12} sm={12}>
             <Card>
               <CardBody>
                 <h3 className="mb-3">Evolucion de Tarjetas Azules</h3>
@@ -247,7 +247,7 @@ export class GraficoAzules extends Component {
               </CardBody>
             </Card>
           </Col>
-          <Col lg={8} md={12} sm={12}>
+          <Col lg={7} md={12} sm={12}>
             <Card>
               <CardBody>
                 <h3>Tabla</h3>

@@ -24,6 +24,7 @@ export default function (state = initState, action) {
         tarjetas: action.payload,
         cargando: false,
         agregarsuccess: false,
+        tarjetaActualId: "",
       };
     case AGREGAR_TARJETA:
     case AGREGAR_TARJETA_AMARILLA:
@@ -41,6 +42,7 @@ export default function (state = initState, action) {
           return tarjeta._id === action.payload._id ? action.payload : tarjeta;
         }), // replace matched item and returns the array
         agregarsuccess: true,
+        tarjetaActualId: "",
       });
     case BORRAR_TARJETA:
       return {
