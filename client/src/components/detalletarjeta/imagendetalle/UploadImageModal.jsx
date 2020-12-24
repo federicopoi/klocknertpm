@@ -43,11 +43,8 @@ const UploadImageModal = (props) => {
       </Button>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Adjuntar Imagen</ModalHeader>
-<<<<<<< HEAD
+
         <div className="mt-3 mb-3 ml-3 mr-3">
-=======
-        <div className="mt-3 mb-3 mr-3 ml-3">
->>>>>>> 8a8163f66a7f3fb92c52a926fc91ad2a6e83c191
           <input
             type="file"
             onChange={(event) => {
@@ -55,6 +52,7 @@ const UploadImageModal = (props) => {
             }}
           />
         </div>
+
         <Button color="secondary" onClick={uploadImage}>
           Subir
         </Button>

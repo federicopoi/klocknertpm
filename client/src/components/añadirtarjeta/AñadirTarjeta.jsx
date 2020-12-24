@@ -133,26 +133,10 @@ class AñadirTarjeta extends Component {
       : this.props.agregarTarjetaAmarilla(nuevaTarjetaAmarilla);
   };
   render() {
-    const idTarjeta =
-      this.props.tarjetas.tarjetas &&
-      this.props.tarjetas.tarjetas
-        .filter(({ color, numero }) => {
-          return color === this.state.color && numero === this.state.numero;
-        })
-        .map((item) => {
-          return item._id;
-        });
-
-    const link = `/tarjeta/${idTarjeta[0]}`;
-
     if (this.props.tarjetas.agregarsuccess) {
-<<<<<<< HEAD
       return (
         <Redirect to={`/tarjeta/${this.props.tarjetas.tarjetaActualId}`} />
       );
-=======
-      return <Redirect to={link} />;
->>>>>>> 8a8163f66a7f3fb92c52a926fc91ad2a6e83c191
     }
 
     const { campos } = this.props.campos;
