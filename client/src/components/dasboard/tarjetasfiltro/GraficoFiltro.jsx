@@ -308,22 +308,16 @@ export class GraficoFiltro extends Component {
             </Card>
           </Col>
           <Col lg={7} md={12} sm={12}>
-            <Card>
-              <CardBody>
-                <h3>Tabla</h3>
-                <TableModal
-                  tarjetasFiltro1={arrTarjetasFiltroAcumuladas}
-                  tarjetasFiltro2={arrTarjetasFiltroAcumuladasCerradas}
-                  tarjetasFiltro3={
-                    arrTarjetasFiltroAcumuladasCerradasPorcentaje
-                  }
-                  tarjetasmesabiertas={array}
-                  tarjetasmescerradas={arrayCerradas}
-                  color={this.state.color}
-                  fechas={fechastarjetasUnicasRango}
-                ></TableModal>
-              </CardBody>
-            </Card>
+            <TableModal
+              tarjetasFiltro1={arrTarjetasFiltroAcumuladas}
+              tarjetasFiltro2={arrTarjetasFiltroAcumuladasCerradas}
+              tarjetasFiltro3={arrTarjetasFiltroAcumuladasCerradasPorcentaje}
+              tarjetasmesabiertas={array}
+              tarjetasmescerradas={arrayCerradas}
+              color={this.state.color}
+              fechas={fechastarjetasUnicasRango}
+            ></TableModal>
+
             <Card>
               <CardBody>
                 {" "}

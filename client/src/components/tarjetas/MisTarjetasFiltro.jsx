@@ -36,6 +36,12 @@ const options = [
   { value: "riesgoInicial", label: "Riesgo Inicial" },
   { value: "riesgoFinal", label: "Riesgo Final" },
   { value: "tipoAccion", label: "Tipo de Accion" },
+  { value: "responsable", label: "Responsable" },
+  { value: "tiempoEmpleado", label: "Tiempo Empleado" },
+  { value: "convertida", label: "Tarjeta Convertida" },
+  { value: "causa", label: "Causa de anomalia" },
+  { value: "tareaRealizada", label: "Tarea Realizada" },
+  { value: "materialUtilizado", label: "Material Utilizado" },
 ];
 class MisTarjetasFiltro extends Component {
   componentDidMount() {
@@ -44,6 +50,12 @@ class MisTarjetasFiltro extends Component {
   }
   state = {
     selectedOption: null,
+    tareaRealizada: "",
+    materialUtilizado: "",
+    causa: "",
+    convertida: "",
+    tiempoEmpleado: "",
+    responsable: "",
     numero: "",
     color: "",
     equipo: "",
@@ -90,6 +102,13 @@ class MisTarjetasFiltro extends Component {
       riesgoInicial: this.state.riesgoInicial && this.state.riesgoInicial,
       riesgoFinal: this.state.riesgoFinal && this.state.riesgoFinal,
       tipoAccion: this.state.tipoAccion && this.state.tipoAccion,
+      responsable: this.state.responsable && this.state.responsable,
+      tiempoEmpleado: this.state.tiempoEmpleado && this.state.tiempoEmpleado,
+      convertida: this.state.convertida && this.state.convertida,
+      causa: this.state.causa && this.state.causa,
+      tareaRealizada: this.state.tareaRealizada && this.state.tareaRealizada,
+      materialUtilizado:
+        this.state.materialUtilizado && this.state.materialUtilizado,
     };
 
     const multiFilter = (arr, filters) => {
@@ -147,6 +166,30 @@ class MisTarjetasFiltro extends Component {
     const arrTipoAccion = tarjetas.map(({ tipoAccion }) => tipoAccion);
     const unicosTipoAccion = Array.from(new Set(arrTipoAccion));
 
+    const arrResponsable = tarjetas.map(({ responsable }) => responsable);
+    const unicosResponsable = Array.from(new Set(arrResponsable));
+
+    const arrTiempoEmpleado = tarjetas.map(
+      ({ tiempoEmpleado }) => tiempoEmpleado
+    );
+    const unicosTiempoEmpleado = Array.from(new Set(arrTiempoEmpleado));
+
+    const arrConvertida = tarjetas.map(({ convertida }) => convertida);
+    const unicosConvertida = Array.from(new Set(arrConvertida));
+
+    const arrCausa = tarjetas.map(({ causa }) => causa);
+    const unicosCausa = Array.from(new Set(arrCausa));
+
+    const arrTareaRealizada = tarjetas.map(
+      ({ tareaRealizada }) => tareaRealizada
+    );
+    const unicosTareaRealizada = Array.from(new Set(arrTareaRealizada));
+
+    const arrMaterialUtilizado = tarjetas.map(
+      ({ materialUtilizado }) => materialUtilizado
+    );
+    const unicosMaterialUtilizado = Array.from(new Set(arrMaterialUtilizado));
+
     const globalArray = {
       numero: unicosNumero,
       color: unicosColores,
@@ -162,6 +205,12 @@ class MisTarjetasFiltro extends Component {
       riesgoInicial: unicosRiesgoInicial,
       riesgoFinal: unicosRiesgoFinal,
       tipoAccion: unicosTipoAccion,
+      responsable: unicosResponsable,
+      tiempoEmpleado: unicosTiempoEmpleado,
+      convertida: arrConvertida,
+      causa: unicosCausa,
+      tareaRealizada: unicosTareaRealizada,
+      materialUtilizado: unicosMaterialUtilizado,
     };
     if (!localStorage.token) return <Redirect to="/login" />;
     if (this.props.user && this.props.user.role === "Operario") {

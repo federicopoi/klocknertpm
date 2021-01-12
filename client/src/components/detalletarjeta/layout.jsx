@@ -32,9 +32,8 @@ class LayoutDetalle extends Component {
                     </Col>
                   </Row>
                   <Row>
-                    <Col sm={6} lg={6}>
+                    <Col sm={6} lg={6} height={400}>
                       <AbiertaDetalle
-                        className="text-center"
                         tarjetas={tarjetas}
                         link_id={link_id}
                       ></AbiertaDetalle>

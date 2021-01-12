@@ -248,22 +248,15 @@ export class GraficoAmarillas extends Component {
             </Card>
           </Col>
           <Col lg={7} md={12} sm={12}>
-            <Card>
-              <CardBody>
-                <h3>Tabla</h3>
-                <TableModal
-                  tarjetasFiltro1={arrTarjetasAmarillasAcumuladas}
-                  tarjetasFiltro2={arrTarjetasAmarillasAcumuladasCerradas}
-                  tarjetasFiltro3={
-                    arrTarjetasAmarillasAcumuladasCerradasPorcentaje
-                  }
-                  tarjetasmesabiertas={array}
-                  tarjetasmescerradas={arrayCerradas}
-                  color="Amarillas"
-                  fechas={fechastarjetasUnicasRango}
-                ></TableModal>
-              </CardBody>
-            </Card>
+            <TableModal
+              tarjetasFiltro1={arrTarjetasAmarillasAcumuladas}
+              tarjetasFiltro2={arrTarjetasAmarillasAcumuladasCerradas}
+              tarjetasFiltro3={arrTarjetasAmarillasAcumuladasCerradasPorcentaje}
+              tarjetasmesabiertas={array}
+              tarjetasmescerradas={arrayCerradas}
+              color="Amarillas"
+              fechas={fechastarjetasUnicasRango}
+            ></TableModal>
           </Col>
         </Row>
       </div>

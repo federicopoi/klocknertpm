@@ -38,6 +38,7 @@ const VersionControlModal = (props) => {
                 <div class="inside">
                   <Container>
                     <div class="entry-content">
+                      <p>&#9642; Campos añadidos a tablas dinamicas</p>
                       <p>
                         &#9642; Al crear una tarjeta se redirige al detalle de
                         la misma.
@@ -45,6 +46,11 @@ const VersionControlModal = (props) => {
                       <p>
                         &#9642; Boton para imprimir QR agregado en detalle de
                         tarjeta.
+                      </p>
+                      <p>&#9642; Campos añadidos al editar tarjeta.</p>
+                      <p>
+                        &#9642; Las tablas de los graficos ahora se pueden
+                        exportar a excel.
                       </p>
                     </div>
                   </Container>

@@ -26,8 +26,11 @@
     "express-fileupload": "^1.1.7-alpha.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.10",
+    "react-infinite-scroll-component": "^5.1.0",
     "react-print-components": "^1.0.4",
     "react-select": "^3.1.0",
+    "react-virtualized": "^9.22.3",
+    "react-window": "^1.8.6",
     "xlsx": "^0.16.2"
   },
   "devDependencies": {

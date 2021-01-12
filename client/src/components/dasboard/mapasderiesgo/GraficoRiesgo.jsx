@@ -64,6 +64,10 @@ export class GraficoRiesgo extends Component {
       return estado === "Abierta";
     });
 
+    const arrCerradas = newFilter.filter(({ estado }) => {
+      return estado === "Cerrada";
+    });
+
     // Porcentaje de puntos tratados
 
     const arrPorcentajePuntos = (arrAbiertas.length / newFilter.length) * 100;
@@ -74,8 +78,6 @@ export class GraficoRiesgo extends Component {
     const RI1 = newFilter.filter(({ riesgoInicial }) =>
       riesgoInicial.includes("NS: No Significativo")
     ).length;
-
-    console.log(RI1);
 
     // Poco significativo
     const RI2 =
@@ -106,34 +108,37 @@ export class GraficoRiesgo extends Component {
     // Nivel Riesgo Final
 
     // No significativo
-    const RI1A = arrAbiertas.filter(({ riesgoInicial }) =>
-      riesgoInicial.includes("NS: No Significativo")
+    const RI1A = arrCerradas.filter(
+      ({ riesgoFinal }) =>
+        riesgoFinal.toLowerCase() === "NS: No Significativo".toLowerCase()
     ).length;
-
-    console.log(RI1);
 
     // Poco significativo
     const RI2A =
-      arrAbiertas.filter(({ riesgoInicial }) =>
-        riesgoInicial.includes("PS: Poco Significativo")
+      arrCerradas.filter(
+        ({ riesgoFinal }) =>
+          riesgoFinal.toLowerCase() === "PS: Poco Significativo".toLowerCase()
       ).length * 2;
 
     // Moderado
     const RI3A =
-      arrAbiertas.filter(({ riesgoInicial }) =>
-        riesgoInicial.includes("MO: Moderado")
+      arrCerradas.filter(
+        ({ riesgoFinal }) =>
+          riesgoFinal.toLowerCase() === "MO: Moderado".toLowerCase()
       ).length * 3;
 
     // Sigfificativo
     const RI4A =
-      arrAbiertas.filter(({ riesgoInicial }) =>
-        riesgoInicial.includes("SI: Significativo")
+      arrCerradas.filter(
+        ({ riesgoFinal }) =>
+          riesgoFinal.toLowerCase() === "SI: Significativo".toLowerCase()
       ).length * 4;
 
     // Intolerable
     const RI5A =
-      arrAbiertas.filter(({ riesgoInicial }) =>
-        riesgoInicial.includes("IN: Intolerable")
+      arrCerradas.filter(
+        ({ riesgoFinal }) =>
+          riesgoFinal.toLowerCase() === "IN: Intolerable".toLowerCase()
       ).length * 5;
 
     const nivelRiesgoFinal = RI1A + RI2A + RI3A + RI4A + RI5A;

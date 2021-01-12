@@ -245,20 +245,15 @@ export class GraficoRojas extends Component {
             </Card>
           </Col>
           <Col lg={7} md={12} sm={12}>
-            <Card>
-              <CardBody>
-                <h3>Tabla</h3>
-                <TableModal
-                  tarjetasFiltro1={arrTarjetasRojasAcumuladas}
-                  tarjetasFiltro2={arrTarjetasRojasAcumuladasCerradas}
-                  tarjetasFiltro3={arrTarjetasRojasAcumuladasCerradasPorcentaje}
-                  tarjetasmesabiertas={array}
-                  tarjetasmescerradas={arrayCerradas}
-                  color="Rojas"
-                  fechas={fechastarjetasUnicasRango}
-                ></TableModal>
-              </CardBody>
-            </Card>
+            <TableModal
+              tarjetasFiltro1={arrTarjetasRojasAcumuladas}
+              tarjetasFiltro2={arrTarjetasRojasAcumuladasCerradas}
+              tarjetasFiltro3={arrTarjetasRojasAcumuladasCerradasPorcentaje}
+              tarjetasmesabiertas={array}
+              tarjetasmescerradas={arrayCerradas}
+              color="Rojas"
+              fechas={fechastarjetasUnicasRango}
+            ></TableModal>
           </Col>
         </Row>
       </div>

@@ -248,22 +248,15 @@ export class GraficoAzules extends Component {
             </Card>
           </Col>
           <Col lg={7} md={12} sm={12}>
-            <Card>
-              <CardBody>
-                <h3>Tabla</h3>
-                <TableModal
-                  tarjetasFiltro1={arrTarjetasAzulesAcumuladas}
-                  tarjetasFiltro2={arrTarjetasAzulesAcumuladasCerradas}
-                  tarjetasFiltro3={
-                    arrTarjetasAzulesAcumuladasCerradasPorcentaje
-                  }
-                  tarjetasmesabiertas={array}
-                  tarjetasmescerradas={arrayCerradas}
-                  color="Azules"
-                  fechas={fechastarjetasUnicasRango}
-                ></TableModal>
-              </CardBody>
-            </Card>
+            <TableModal
+              tarjetasFiltro1={arrTarjetasAzulesAcumuladas}
+              tarjetasFiltro2={arrTarjetasAzulesAcumuladasCerradas}
+              tarjetasFiltro3={arrTarjetasAzulesAcumuladasCerradasPorcentaje}
+              tarjetasmesabiertas={array}
+              tarjetasmescerradas={arrayCerradas}
+              color="Azules"
+              fechas={fechastarjetasUnicasRango}
+            ></TableModal>
           </Col>
         </Row>
       </div>

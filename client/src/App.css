@@ -96,3 +96,17 @@ footer {
   border-top: 1px solid white;
   text-align: right;
 }
+.container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.table-row {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ReactVirtualized__Table__headerRow {
+  border: 0;
+  color: #ff0;
+}

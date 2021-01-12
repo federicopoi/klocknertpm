@@ -47,7 +47,7 @@ export class AbiertaDetalle extends Component {
                       <div class="trapezoidAmarilla"></div>
                     )}
 
-                    <Card>
+                    <Card className="card">
                       <CardBody>
                         <Row className="ml-2 my-1">
                           <h5
