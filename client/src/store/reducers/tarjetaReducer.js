@@ -42,7 +42,6 @@ export default function (state = initState, action) {
           return tarjeta._id === action.payload._id ? action.payload : tarjeta;
         }), // replace matched item and returns the array
         agregarsuccess: true,
-        tarjetaActualId: "",
       });
     case BORRAR_TARJETA:
       return {

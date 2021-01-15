@@ -168,7 +168,7 @@ export class GraficoRiesgo extends Component {
                     </tr>
                     <tr>
                       <td>Porcentaje de puntos tratados</td>
-                      <td>{arrPorcentajePuntos.toFixed(2)} %</td>
+                      <td>{100 - arrPorcentajePuntos.toFixed(2)} %</td>
                     </tr>
                     <tr>
                       <td>Nivel Riesgo Inicial</td>
