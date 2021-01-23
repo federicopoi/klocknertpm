@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Input, Label, Button } from "reactstrap";
+import { Container, Input, Label, Button, Row, Col } from "reactstrap";
 import { getTarjetas } from "../store/actions/tarjetaActions";
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
@@ -40,7 +40,28 @@ class SearchBy extends Component {
         <div className="page-wrapper d-block">
           <div className="page-content container-fluid">
             <Container>
-              <h3>Buscar por color y numero</h3>
+              <Row>
+                <Col>
+                  <div className="d-sm-flex align-items-center">
+                    <div className="">
+                      <div>
+                        <h2 className="mb-3">Buscar por color y numero</h2>
+                      </div>
+                    </div>
+
+                    <div className="ml-auto d-sm-flex no-block align-items-center mb-3">
+                      <Col>
+                        <Link to="/tarjetasfiltro">
+                          <Button color="secondary" className="btn">
+                            Exportar Tarjetas
+                          </Button>
+                        </Link>
+                      </Col>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+
               <Label for="color">Color *</Label>
               <Input
                 type="select"

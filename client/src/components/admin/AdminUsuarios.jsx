@@ -69,23 +69,18 @@ export class AdminUsuarios extends Component {
                       <div className="">
                         <div>
                           <h2 className="mb-3">Administrar</h2>
-                          <VersionControlModal></VersionControlModal>
                         </div>
                       </div>
 
                       <div className="ml-auto d-sm-flex no-block align-items-center mb-3">
                         <Col>
-                          <Link to="/tarjetasfiltro">
-                            <Button color="secondary" className="btn">
-                              Filtrar Tarjetas
-                            </Button>
-                          </Link>
+                          <VersionControlModal></VersionControlModal>
                         </Col>
                       </div>
                     </div>
                   </Col>
                 </Row>
-                <hr className="mb-3"></hr>
+
                 <Row className="mt-3">
                   <Col>
                     <div className="d-sm-flex align-items-center mt-3">

@@ -24,33 +24,30 @@ const VersionControlModal = (props) => {
         onClick={toggle}
         style={{ cursor: "pointer" }}
       >
-        v. 1.2.1
+        v. 1.2.2
       </p>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Control de Versión</ModalHeader>
         <ModalBody>
           <ListGroup>
             <h6 style={{ fontWeight: "bold" }} className="mb-3">
-              Versión 1.2.1 | 24/12/20
+              Versión 1.2.2 | 22/01/21
             </h6>
             <div class="row">
               <div class="span12">
                 <div class="inside">
                   <Container>
                     <div class="entry-content">
-                      <p>&#9642; Campos añadidos a tablas dinamicas</p>
                       <p>
-                        &#9642; Al crear una tarjeta se redirige al detalle de
-                        la misma.
+                        &#9642; Login ahora requerido cuando se accede a una
+                        tarjeta por qr.
                       </p>
                       <p>
-                        &#9642; Boton para imprimir QR agregado en detalle de
-                        tarjeta.
+                        &#9642; Cambio de ubicacion de Exportar tarjetas para
+                        permitir acceso de Jefe de area.
                       </p>
-                      <p>&#9642; Campos añadidos al editar tarjeta.</p>
                       <p>
-                        &#9642; Las tablas de los graficos ahora se pueden
-                        exportar a excel.
+                        &#9642; Filtrar tarjetas cambiado a Exportar tarjetas
                       </p>
                     </div>
                   </Container>

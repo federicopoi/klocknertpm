@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Row, Col, Container } from "reactstrap";
 import { connect } from "react-redux";
 import { getTarjetas } from "../../store/actions/tarjetaActions";
+import { Redirect } from "react-router-dom";
 import { CerradaDetalle, TextDetail, AbiertaDetalle, ImagenDetalle } from ".";
 
 class LayoutDetalle extends Component {
@@ -15,6 +16,10 @@ class LayoutDetalle extends Component {
     const estadoTarjeta = tarjetas
       .filter(({ _id }) => _id === link_id)
       .map(({ estado }) => estado);
+
+    const { isAuthenticated, isLoading } = this.props;
+    if (isAuthenticated === false && isLoading === false)
+      return <Redirect to="/login" />;
 
     return (
       <div>
@@ -95,6 +100,8 @@ class LayoutDetalle extends Component {
 const mapStateToProps = (state) => {
   return {
     tarjetas: state.tarjetas,
+    isAuthenticated: state.auth.isAuthenticated,
+    isLoading: state.auth.isLoading,
   };
 };
 export default connect(mapStateToProps, { getTarjetas })(LayoutDetalle);
