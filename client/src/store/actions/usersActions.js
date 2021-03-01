@@ -1,4 +1,4 @@
-import { GET_USERS, USERS_LOADING, BORRAR_USER } from "./types";
+import { GET_USERS, USERS_LOADING, BORRAR_USER, CAMBIAR_ROL } from "./types";
 import { tokenConfig } from "./authActions";
 import { returnErrors } from "./errorActions";
 import axios from "axios";
@@ -30,6 +30,26 @@ export const borrarUser = (id) => (dispatch) => {
     )
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
+export const cambiarRol = (tarjeta) => (dispatch) => {
+  axios
+    .post("/api/users/cambiarrol", tarjeta)
+    .then((res) =>
+      dispatch({
+        type: CAMBIAR_ROL,
+        payload: res.data,
+      })
+    )
+    .catch((err) =>
+      dispatch(
+        returnErrors(
+          err.response.data,
+          err.response.status,
+          "CAMBIAR_ROL_ERROR"
+        )
+      )
     );
 };
 

@@ -7,6 +7,7 @@ import {
   AGREGAR_TARJETA_AMARILLA,
   CERRAR_TARJETA_AMARILLA,
   EDITAR_TARJETA,
+  AGREGAR_PLANIFICACION,
   AGREGAR_IMAGEN,
 } from "../actions/types";
 const initState = {
@@ -50,15 +51,15 @@ export default function (state = initState, action) {
           (tarjeta) => tarjeta._id !== action.payload
         ),
       };
-    case AGREGAR_IMAGEN:
-      return {
-        ...state,
-        tarjetas: [action.payload],
-      };
     case CARGANDO_TARJETAS:
       return {
         ...state,
         cargando: true,
+      };
+    case AGREGAR_PLANIFICACION:
+      return {
+        ...state,
+        tarjetas: [action.payload],
       };
     case AGREGAR_IMAGEN:
       return {

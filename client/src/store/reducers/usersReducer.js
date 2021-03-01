@@ -3,6 +3,7 @@ import {
   USERS_LOADING,
   UPDATE_SUCCESS,
   BORRAR_USER,
+  CAMBIAR_ROL,
 } from "../actions/types";
 const initState = {
   users: [],
@@ -27,6 +28,12 @@ export default function (state = initState, action) {
         ...state,
         loading: true,
       };
+    case CAMBIAR_ROL:
+      return Object.assign({}, state, {
+        users: state.users.map((user) => {
+          return user._id === action.payload._id ? action.payload : user;
+        }),
+      });
     case UPDATE_SUCCESS:
       return Object.assign({}, state, {
         users: state.users

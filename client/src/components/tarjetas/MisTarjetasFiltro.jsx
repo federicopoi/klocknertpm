@@ -38,7 +38,6 @@ const options = [
   { value: "tipoAccion", label: "Tipo de Accion" },
   { value: "responsable", label: "Responsable" },
   { value: "tiempoEmpleado", label: "Tiempo Empleado" },
-  { value: "convertida", label: "Tarjeta Convertida" },
   { value: "causa", label: "Causa de anomalia" },
   { value: "tareaRealizada", label: "Tarea Realizada" },
   { value: "materialUtilizado", label: "Material Utilizado" },
@@ -53,7 +52,6 @@ class MisTarjetasFiltro extends Component {
     tareaRealizada: "",
     materialUtilizado: "",
     causa: "",
-    convertida: "",
     tiempoEmpleado: "",
     responsable: "",
     numero: "",
@@ -72,6 +70,8 @@ class MisTarjetasFiltro extends Component {
     tipoAccion: "",
     qrcode: false,
     alerta: false,
+    planificacion: false,
+    convertida: false,
   };
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
@@ -104,7 +104,6 @@ class MisTarjetasFiltro extends Component {
       tipoAccion: this.state.tipoAccion && this.state.tipoAccion,
       responsable: this.state.responsable && this.state.responsable,
       tiempoEmpleado: this.state.tiempoEmpleado && this.state.tiempoEmpleado,
-      convertida: this.state.convertida && this.state.convertida,
       causa: this.state.causa && this.state.causa,
       tareaRealizada: this.state.tareaRealizada && this.state.tareaRealizada,
       materialUtilizado:
@@ -174,8 +173,7 @@ class MisTarjetasFiltro extends Component {
     );
     const unicosTiempoEmpleado = Array.from(new Set(arrTiempoEmpleado));
 
-    const arrConvertida = tarjetas.map(({ convertida }) => convertida);
-    const unicosConvertida = Array.from(new Set(arrConvertida));
+    const unicosConvertida = [true, false];
 
     const arrCausa = tarjetas.map(({ causa }) => causa);
     const unicosCausa = Array.from(new Set(arrCausa));
@@ -207,15 +205,14 @@ class MisTarjetasFiltro extends Component {
       tipoAccion: unicosTipoAccion,
       responsable: unicosResponsable,
       tiempoEmpleado: unicosTiempoEmpleado,
-      convertida: arrConvertida,
       causa: unicosCausa,
       tareaRealizada: unicosTareaRealizada,
       materialUtilizado: unicosMaterialUtilizado,
     };
-    if (!localStorage.token) return <Redirect to="/login" />;
-    if (this.props.user && this.props.user.role === "Operario") {
-      return <Redirect to="/login" />;
-    }
+    // if (!localStorage.token) return <Redirect to="/login" />;
+    // if (this.props.user && this.props.user.role === "Operario") {
+    //   return <Redirect to="/login" />;
+    // }
     return (
       <div>
         <div className="page-wrapper d-block">
@@ -272,6 +269,7 @@ class MisTarjetasFiltro extends Component {
                         familia,
                         qrcode,
                         alerta,
+                        convertida,
                       }) => {
                         return (
                           <Button
@@ -291,6 +289,7 @@ class MisTarjetasFiltro extends Component {
                                 familia,
                                 qrcode,
                                 alerta,
+                                convertida,
                               });
                             }}
                           >
@@ -327,6 +326,7 @@ class MisTarjetasFiltro extends Component {
                       />
                       Alerta
                     </Label>
+
                     <Col>
                       <Row>
                         <Label check>
@@ -344,6 +344,47 @@ class MisTarjetasFiltro extends Component {
                             }}
                           />
                           Qr Code
+                        </Label>
+                      </Row>
+                    </Col>
+                    <Col>
+                      <Row>
+                        <Label check>
+                          <Input
+                            type="checkbox"
+                            id="convertida"
+                            className="mr-4"
+                            name="convertida"
+                            onChange={(e) => {
+                              this.onChange({
+                                target: {
+                                  name: e.target.name,
+                                  value: e.target.checked,
+                                },
+                              });
+                            }}
+                          />
+                          Convertida
+                        </Label>
+                      </Row>
+                    </Col>
+                    <Col>
+                      <Row>
+                        <Label check>
+                          <Input
+                            type="checkbox"
+                            id="planificacion"
+                            name="planificacion"
+                            onChange={(e) => {
+                              this.onChange({
+                                target: {
+                                  name: e.target.name,
+                                  value: e.target.checked,
+                                },
+                              });
+                            }}
+                          />
+                          Planificación
                         </Label>
                       </Row>
                     </Col>
@@ -365,6 +406,8 @@ class MisTarjetasFiltro extends Component {
                         familia: "",
                         qrcode: false,
                         alerta: false,
+                        conertida: false,
+                        planificacion: false,
                         selectedOption: null,
                       });
                     }}
@@ -417,6 +460,53 @@ class MisTarjetasFiltro extends Component {
                         {this.state.alerta && (
                           <th className="border-0">Alerta</th>
                         )}
+
+                        {this.state.planificacion && (
+                          <th className="border-0">Fecha prevista de cierre</th>
+                        )}
+                        {this.state.planificacion && (
+                          <th className="border-0">
+                            Responsable del seguimiento
+                          </th>
+                        )}
+                        {this.state.planificacion && (
+                          <th className="border-0">Recursos a utilizar</th>
+                        )}
+                        {this.state.planificacion && (
+                          <th className="border-0">
+                            Materiales/Repuestos necesarios
+                          </th>
+                        )}
+                        {this.state.planificacion && (
+                          <th className="border-0">
+                            Fecha solicitud a Compras
+                          </th>
+                        )}
+                        {this.state.planificacion && (
+                          <th className="border-0">
+                            Fecha compromotida por Compras
+                          </th>
+                        )}
+                        {this.state.planificacion && (
+                          <th className="border-0">Tarea a realizar</th>
+                        )}
+                        {this.state.planificacion && (
+                          <th className="border-0">
+                            Responsable de la tarea a realizar
+                          </th>
+                        )}
+                        {this.state.planificacion && (
+                          <th className="border-0">Comentario 1</th>
+                        )}
+                        {this.state.planificacion && (
+                          <th className="border-0">Comentario 2</th>
+                        )}
+                        {this.state.planificacion && (
+                          <th className="border-0">Comentario 3</th>
+                        )}
+                        {this.state.convertida && (
+                          <th className="border-0">Convertida</th>
+                        )}
                       </tr>
                     </thead>
 
@@ -435,26 +525,6 @@ class MisTarjetasFiltro extends Component {
                         return (
                           <tbody key={index}>
                             <tr>
-                              {selectedOption &&
-                                selectedOption.map(
-                                  ({ value, label }, index) => {
-                                    return item[label] === "fecha" ? (
-                                      <td key={index}>
-                                        {moment(item[value]).fromNow()}
-                                      </td>
-                                    ) : (
-                                      <td key={index}>{item[value]}</td>
-                                    );
-                                  }
-                                )}
-                              {this.state.qrcode && (
-                                <td>
-                                  <QRCode value={link + item._id} />
-                                  <h4 className="mt-3">
-                                    Tarjeta {item.color} N°{item.numero}
-                                  </h4>
-                                </td>
-                              )}
                               {this.state.alerta &&
                                 item.prioridad === "Alta" &&
                                 timeDiferrence <= 15 && (
@@ -485,6 +555,103 @@ class MisTarjetasFiltro extends Component {
                                 timeDiferrence >= 60 && (
                                   <td>Excedido {-timeDiferrence - 60} dias</td>
                                 )}
+
+                              {selectedOption &&
+                                selectedOption.map(
+                                  ({ value, label }, index) => {
+                                    return item[label] === "fecha" ? (
+                                      <td key={index}>
+                                        {moment(item[value]).fromNow()}
+                                      </td>
+                                    ) : (
+                                      <td key={index}>{item[value]}</td>
+                                    );
+                                  }
+                                )}
+                              {this.state.qrcode && (
+                                <td>
+                                  <QRCode value={link + item._id} />
+                                  <h4 className="mt-3">
+                                    Tarjeta {item.color} N°{item.numero}
+                                  </h4>
+                                </td>
+                              )}
+                              {this.state.planificacion &&
+                                item.previstaCierre !== undefined && (
+                                  <td>
+                                    {moment(item.previstaCierre).format(
+                                      "DD/MM/YYYY"
+                                    )}
+                                  </td>
+                                )}
+                              {this.state.planificacion && (
+                                <td>{item.responsableSeguimiento}</td>
+                              )}
+                              {this.state.planificacion && (
+                                <td>{item.recursos}</td>
+                              )}
+                              {this.state.planificacion && (
+                                <td>{item.materiales}</td>
+                              )}
+                              {this.state.planificacion &&
+                                item.solicitudCompras !== undefined && (
+                                  <td>
+                                    {moment(item.solicitudCompras).format(
+                                      "DD/MM/YYYY"
+                                    )}
+                                  </td>
+                                )}
+                              {this.state.planificacion &&
+                                item.comprometidaCompras !== undefined && (
+                                  <td>
+                                    {moment(item.comprometidaCompras).format(
+                                      "DD/MM/YYYY"
+                                    )}
+                                  </td>
+                                )}
+                              {this.state.planificacion && (
+                                <td>{item.tareaRealizar}</td>
+                              )}
+                              {this.state.planificacion && (
+                                <td>{item.responsableTarea}</td>
+                              )}
+                              {this.state.planificacion && (
+                                <td>{item.comentario1}</td>
+                              )}
+                              {this.state.planificacion && (
+                                <td>{item.comentario2}</td>
+                              )}
+                              {this.state.planificacion && (
+                                <td>{item.comentario3}</td>
+                              )}
+
+                              {this.state.convertida &&
+                                item.convertida === true && <td>Si</td>}
+
+                              {this.state.convertida &&
+                                item.convertida === false && <td>No</td>}
+                              {/* {this.state.comentarios && (
+                                <td>
+                                  {item.comentarios.map(
+                                    ({ descripcion }, index) => {
+                                      return (
+                                        <div key={index}>{descripcion}</div>
+                                      );
+                                    }
+                                  )}
+                                </td>
+                              )}
+                              {this.state.comentarios && (
+                                <td>
+                                  {item.comentarios.map(({ fecha }, index) => {
+                                    return (
+                                      <div key={index}>
+                                        {moment(fecha).format("DD/MM/YYYY LTS")}
+                                      </div>
+                                    );
+                                  })}
+                                </td>
+                              )} */}
                             </tr>
                           </tbody>
                         );

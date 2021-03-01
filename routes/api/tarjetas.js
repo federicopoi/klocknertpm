@@ -365,21 +365,43 @@ router.post("/editarAmarilla", (req, res) => {
   });
 });
 
-// @route POST api/tickets/agregarcomentario
-// @desc Agregar comentario
+// @route POST api/tarjetas/planificacion
+// @desc Agregar planificacion
 // @access Public
-router.post("/agregarcomentario", (req, res) => {
-  const { _id, comentario } = req.body;
+router.post("/agregarplanificacion", (req, res) => {
+  const {
+    _id,
+    previstaCierre,
+    responsableSeguimiento,
+    recursos,
+    materiales,
+    solicitudCompras,
+    comprometidaCompras,
+    tareaRealizar,
+    responsableTarea,
+    comentario1,
+    comentario2,
+    comentario3,
+  } = req.body;
 
   Tarjeta.findOne({ _id }).exec((err, tarjeta) => {
-    if (err) console.log("Update Ticket  ", err);
+    if (err) console.log("Actualizar Tarjeta  ", err);
 
-    const arr = tarjeta.comentarios;
+    tarjeta.previstaCierre = previstaCierre;
+    tarjeta.responsableSeguimiento = responsableSeguimiento;
+    tarjeta.recursos = recursos;
+    tarjeta.materiales = materiales;
+    tarjeta.solicitudCompras = solicitudCompras;
+    tarjeta.comprometidaCompras = comprometidaCompras;
+    tarjeta.tareaRealizar = tareaRealizar;
+    tarjeta.responsableTarea = responsableTarea;
+    tarjeta.comentario1 = comentario1;
+    tarjeta.comentario2 = comentario2;
+    tarjeta.comentario3 = comentario3;
+    tarjeta.planificacion = true;
 
-    const concatArr = arr.concat(comentario);
-    tarjeta.comentarios = concatArr;
-
-    tarjeta.save().then((tarjeta) => res.json(tarjeta));
+    tarjeta.save();
+    res.json(tarjeta);
   });
 });
 

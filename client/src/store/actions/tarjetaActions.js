@@ -7,6 +7,7 @@ import {
   AGREGAR_TARJETA_AMARILLA,
   CERRAR_TARJETA_AMARILLA,
   EDITAR_TARJETA,
+  AGREGAR_PLANIFICACION,
   AGREGAR_IMAGEN,
 } from "./types";
 
@@ -166,6 +167,20 @@ export const borrarTarjeta = (id) => (dispatch) => {
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
+};
+
+export const agregarPlanificacion = (planificacion) => (dispatch) => {
+  axios
+    .post("/api/tarjetas/agregarplanificacion", planificacion)
+    .then((res) =>
+      dispatch({
+        type: AGREGAR_PLANIFICACION,
+        payload: res.data,
+      })
+    )
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
 };
 export const agregarImagen = (imagen) => (dispatch) => {
   axios

@@ -69,10 +69,11 @@ class AñadirTarjeta extends Component {
     const numeroTarjeta = this.props.tarjetas.tarjetas.filter(
       ({ color }) => color === e.target.value
     );
-    console.log(numeroTarjeta.length);
+    const arrSliced = numeroTarjeta.slice(-1)[0];
+    const lastNumber = arrSliced.numero;
     this.setState({
       [e.target.name]: e.target.value,
-      numero: numeroTarjeta.length + 1,
+      numero: parseInt(lastNumber) + 1,
     });
   };
   onSubmit = (e) => {
@@ -134,13 +135,10 @@ class AñadirTarjeta extends Component {
   };
   render() {
     if (this.props.tarjetas.agregarsuccess) {
-      return (
-        <Redirect to={`/tarjeta/${this.props.tarjetas.tarjetaActualId}`} />
-      );
+      return <Redirect to={`/tarjetas/`} />;
     }
 
     const { campos } = this.props.campos;
-    console.log(this.state);
     return (
       <div>
         <div className="page-wrapper d-block">
@@ -154,19 +152,47 @@ class AñadirTarjeta extends Component {
                 id="agregartarjeta"
               >
                 <FormGroup>
-                  <Label for="color">Color *</Label>
-                  <Input
-                    type="select"
-                    name="color"
-                    id="color"
-                    onChange={this.onChangeColor}
-                  >
-                    <option>Seleccionar</option>
-                    <option>Roja</option>
-                    <option>Azul</option>
-                    <option>Verde</option>
-                    <option>Amarilla</option>
-                  </Input>
+                  {this.state.numero !== "" ? (
+                    <div>
+                      <Row>
+                        <Col lg={10}>
+                          <Label for="color">Color *</Label>
+                          <Input
+                            type="select"
+                            name="color"
+                            id="color"
+                            onChange={this.onChangeColor}
+                          >
+                            <option>Seleccionar</option>
+                            <option>Roja</option>
+                            <option>Azul</option>
+                            <option>Verde</option>
+                            <option>Amarilla</option>
+                          </Input>
+                        </Col>
+                        <Col lg={2}>
+                          <Label for="color">Numero</Label>
+                          <p>{this.state.numero}</p>
+                        </Col>
+                      </Row>
+                    </div>
+                  ) : (
+                    <div>
+                      <Label for="color">Color *</Label>
+                      <Input
+                        type="select"
+                        name="color"
+                        id="color"
+                        onChange={this.onChangeColor}
+                      >
+                        <option>Seleccionar</option>
+                        <option>Roja</option>
+                        <option>Azul</option>
+                        <option>Verde</option>
+                        <option>Amarilla</option>
+                      </Input>
+                    </div>
+                  )}
                 </FormGroup>
 
                 {this.state.color === "Amarilla" && (
@@ -416,7 +442,7 @@ class AñadirTarjeta extends Component {
 
                     {this.state.color !== "Amarilla" ? (
                       <FormGroup>
-                        <Label for="detecto">Tipo de riesgo*</Label>
+                        <Label for="detecto">Tipo de R / FC / LDA*</Label>
                         <Input
                           type="select"
                           name="tipodeRiesgo"
@@ -436,7 +462,7 @@ class AñadirTarjeta extends Component {
                       </FormGroup>
                     ) : (
                       <FormGroup>
-                        <Label for="detecto">Tipo de riesgo *</Label>
+                        <Label for="detecto">Tipo de R / FC / LDA *</Label>
                         <Input
                           type="select"
                           name="tipodeRiesgo"

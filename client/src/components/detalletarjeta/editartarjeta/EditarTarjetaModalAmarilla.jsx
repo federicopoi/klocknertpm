@@ -111,7 +111,9 @@ class EditarTarjetaModalAmarilla extends Component {
   render() {
     return (
       <div>
-        <Button onClick={this.toggle}>Editar Tarjeta</Button>
+        <p onClick={this.toggle} style={{ cursor: "pointer" }} className="my-3">
+          Editar Tarjeta
+        </p>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Editar Tarjeta</ModalHeader>
           <ModalBody>
@@ -216,7 +218,7 @@ class EditarTarjetaModalAmarilla extends Component {
                   </FormGroup>
 
                   <FormGroup>
-                    <Label for="detecto">Tipo de Riesgo*</Label>
+                    <Label for="detecto">Tipo de R / FC / LDA *</Label>
                     <Input
                       type="select"
                       name="tipodeRiesgo"
@@ -264,7 +266,7 @@ class EditarTarjetaModalAmarilla extends Component {
                       id="tareaRealizada"
                       className="mb-2"
                     ></Input>
-                    <Label for="tipoAccion">Tipo de acción *</Label>
+                    <Label for="tipoAccion">Tipo de Acción realizada *</Label>
                     <Input
                       type="select"
                       name="tipoAccion"

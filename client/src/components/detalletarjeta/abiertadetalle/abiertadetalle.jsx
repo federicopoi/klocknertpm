@@ -114,10 +114,12 @@ export class AbiertaDetalle extends Component {
                         <Row className="ml-2 my-1">
                           {color === "Amarilla" ? (
                             <h5 className="font-16 font-medium mr-2">
-                              Tipo de Riesgo:
+                              Tipo de R / FC / LDA:
                             </h5>
                           ) : (
-                            <h5 className="font-16 font-medium mr-2">Tipo: </h5>
+                            <h5 className="font-16 font-medium mr-2">
+                              Tipo de R / FC / LDA:
+                            </h5>
                           )}
                           <h5 className="font-14 font-weight-normal">
                             {tipodeRiesgo}

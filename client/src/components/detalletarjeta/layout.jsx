@@ -2,8 +2,13 @@ import React, { Component } from "react";
 import { Row, Col, Container } from "reactstrap";
 import { connect } from "react-redux";
 import { getTarjetas } from "../../store/actions/tarjetaActions";
-import { Redirect } from "react-router-dom";
-import { CerradaDetalle, TextDetail, AbiertaDetalle, ImagenDetalle } from ".";
+import {
+  CerradaDetalle,
+  TextDetail,
+  AbiertaDetalle,
+  ImagenDetalle,
+  PlanificacionDetalle,
+} from ".";
 
 class LayoutDetalle extends Component {
   componentDidMount() {
@@ -17,9 +22,17 @@ class LayoutDetalle extends Component {
       .filter(({ _id }) => _id === link_id)
       .map(({ estado }) => estado);
 
-    const { isAuthenticated, isLoading } = this.props;
-    if (isAuthenticated === false && isLoading === false)
-      return <Redirect to="/login" />;
+    const plan =
+      tarjetas &&
+      tarjetas
+        .filter(({ _id }) => _id === link_id)
+        .map(({ planificacion }) => planificacion);
+
+    const imagen =
+      tarjetas &&
+      tarjetas
+        .filter(({ _id }) => _id === link_id)
+        .map(({ imagenUrl }) => imagenUrl);
 
     return (
       <div>
@@ -37,21 +50,35 @@ class LayoutDetalle extends Component {
                     </Col>
                   </Row>
                   <Row>
-                    <Col sm={6} lg={6} height={400}>
+                    <Col sm={6} lg={6}>
                       <AbiertaDetalle
+                        className="text-center"
                         tarjetas={tarjetas}
                         link_id={link_id}
                       ></AbiertaDetalle>
                     </Col>
                   </Row>
-                  <Row>
-                    <Col>
-                      <ImagenDetalle
-                        tarjetas={tarjetas}
-                        link_id={link_id}
-                      ></ImagenDetalle>
-                    </Col>
-                  </Row>
+
+                  {plan[0] && (
+                    <Row>
+                      <Col>
+                        <PlanificacionDetalle
+                          tarjetas={tarjetas}
+                          link_id={link_id}
+                        ></PlanificacionDetalle>
+                      </Col>
+                    </Row>
+                  )}
+                  {imagen[0] && (
+                    <Row>
+                      <Col>
+                        <ImagenDetalle
+                          tarjetas={tarjetas}
+                          link_id={link_id}
+                        ></ImagenDetalle>
+                      </Col>
+                    </Row>
+                  )}
                 </div>
               ) : (
                 <div>
@@ -79,14 +106,26 @@ class LayoutDetalle extends Component {
                       ></CerradaDetalle>
                     </Col>
                   </Row>
-                  <Row>
-                    <Col>
-                      <ImagenDetalle
-                        tarjetas={tarjetas}
-                        link_id={link_id}
-                      ></ImagenDetalle>
-                    </Col>
-                  </Row>
+                  {plan[0] && (
+                    <Row>
+                      <Col>
+                        <PlanificacionDetalle
+                          tarjetas={tarjetas}
+                          link_id={link_id}
+                        ></PlanificacionDetalle>
+                      </Col>
+                    </Row>
+                  )}
+                  {imagen[0] && (
+                    <Row>
+                      <Col>
+                        <ImagenDetalle
+                          tarjetas={tarjetas}
+                          link_id={link_id}
+                        ></ImagenDetalle>
+                      </Col>
+                    </Row>
+                  )}
                 </div>
               )}
             </Container>
@@ -100,8 +139,6 @@ class LayoutDetalle extends Component {
 const mapStateToProps = (state) => {
   return {
     tarjetas: state.tarjetas,
-    isAuthenticated: state.auth.isAuthenticated,
-    isLoading: state.auth.isLoading,
   };
 };
 export default connect(mapStateToProps, { getTarjetas })(LayoutDetalle);

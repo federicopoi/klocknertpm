@@ -14,6 +14,7 @@ import {
 } from "reactstrap";
 import { Link, Redirect } from "react-router-dom";
 import CampoModal from "./camposModal";
+import CambiarRolModal from "./cambiarRolModal";
 import CamposParteMaquinaModal from "./camposparteMaquinaModal";
 import { getUsers, borrarUser } from "../../store/actions/usersActions";
 import { borrarCampo } from "../../store/actions/camposActions";
@@ -55,8 +56,6 @@ export class AdminUsuarios extends Component {
   render() {
     const { users } = this.props.users;
     const { campos } = this.props.campos;
-    console.log(this.state);
-    console.log(campos);
     return (
       <div>
         <div className="page-wrapper d-block">
@@ -128,6 +127,9 @@ export class AdminUsuarios extends Component {
                                     Borrar
                                   </Button>
                                 </td>
+                                {/* <td>
+                                  <CambiarRolModal _id={_id}></CambiarRolModal>
+                                </td> */}
                               </tr>
                             </tbody>
                           );

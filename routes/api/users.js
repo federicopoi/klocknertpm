@@ -75,6 +75,22 @@ router.post("/", (req, res) => {
   });
 });
 
+// @route POST api/users/cambiarrol
+// @desc Cambiar Rol Usuario
+// @access Public
+router.post("/cambiarrol", (req, res) => {
+  const { _id, rol } = req.body;
+
+  // Simple validation
+  User.findOne({ _id }).exec((err, user) => {
+    if (err) console.log("Cambiar Rol  ", err);
+
+    user.role = rol;
+    user.save();
+    res.json(user);
+  });
+});
+
 // @route DELETE api/users/:id
 // @desc Delte A User
 // @access Private

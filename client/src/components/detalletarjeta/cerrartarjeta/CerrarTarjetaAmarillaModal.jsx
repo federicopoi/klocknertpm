@@ -109,7 +109,9 @@ export class CerrarTarjetaAmarillaModal extends Component {
     const { campos } = this.props.campos;
     return (
       <div>
-        <Button onClick={this.toggle}>Cerrar Tarjeta</Button>
+        <p onClick={this.toggle} style={{ cursor: "pointer" }} className="my-3">
+          Cerrar Tarjeta
+        </p>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Cerrar Tarjeta</ModalHeader>
           <ModalBody>
@@ -123,7 +125,7 @@ export class CerrarTarjetaAmarillaModal extends Component {
                   id="tareaRealizada"
                   className="mb-2"
                 ></Input>
-                <Label for="tipoAccion">Tipo de acción *</Label>
+                <Label for="tipoAccion">Tipo de Acción realizada *</Label>
                 <Input
                   type="select"
                   name="tipoAccion"

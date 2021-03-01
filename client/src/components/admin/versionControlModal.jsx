@@ -24,12 +24,33 @@ const VersionControlModal = (props) => {
         onClick={toggle}
         style={{ cursor: "pointer" }}
       >
-        v. 1.2.2
+        v. 1.2.3
       </p>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Control de Versión</ModalHeader>
         <ModalBody>
           <ListGroup>
+            <h6 style={{ fontWeight: "bold" }} className="mb-3">
+              Versión 1.2.3 | 28/02/21
+            </h6>
+            <div class="row">
+              <div class="span12">
+                <div class="inside">
+                  <Container>
+                    <div class="entry-content">
+                      <p>&#9642; Planificacion de tarjeta agregada.</p>
+                      <p>
+                        &#9642; Tipo de riesgo cambiado a Tipo de R / FC / LDA.
+                      </p>
+                      <p>
+                        &#9642; Tipo de acción cambiado a Tipo de acción a
+                        realizar.
+                      </p>
+                    </div>
+                  </Container>
+                </div>
+              </div>
+            </div>
             <h6 style={{ fontWeight: "bold" }} className="mb-3">
               Versión 1.2.2 | 22/01/21
             </h6>

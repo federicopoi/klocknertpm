@@ -72,7 +72,7 @@ const CerradaDetalle = (props) => {
                           </Row>
                           <Row className="my-1 ml-2">
                             <h5 className="font-16 font-medium mr-2">
-                              Tipo de acción:
+                              Tipo de Acción realizada:
                             </h5>
                             <h5 className="font-14 font-weight-normal">
                               {tipoAccion}
@@ -211,7 +211,7 @@ const CerradaDetalle = (props) => {
                           </Row>
                           <Row className="my-1 ml-2">
                             <h5 className="font-16 font-medium mr-2">
-                              Tipo de acción:
+                              Tipo de Acción realizada:
                             </h5>
                             <h5 className="font-14 font-weight-normal">
                               {tipoAccion}

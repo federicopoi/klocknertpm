@@ -11,7 +11,9 @@ const QRModal = (props) => {
 
   return (
     <div>
-      <Button onClick={toggle}>Mostrar QR</Button>
+      <p onClick={toggle} style={{ cursor: "pointer" }} className="my-3">
+        Mostrar QR
+      </p>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Código QR</ModalHeader>
         <ModalBody>
