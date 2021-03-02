@@ -38,6 +38,9 @@ const VersionControlModal = (props) => {
                 <div class="inside">
                   <Container>
                     <div class="entry-content">
+                      <p>
+                        &#9642; Función para cambiar rol de usuario agregada.
+                      </p>
                       <p>&#9642; Planificacion de tarjeta agregada.</p>
                       <p>
                         &#9642; Tipo de riesgo cambiado a Tipo de R / FC / LDA.

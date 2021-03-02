@@ -51,7 +51,11 @@ class CambiarRolModal extends Component {
   render() {
     return (
       <div>
-        <Button className="bg-secondary border-secondary ml-3">
+        <Button
+          className="bg-secondary border-secondary ml-3"
+          onClick={this.toggle}
+          href=""
+        >
           Cambiar Rol
         </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>

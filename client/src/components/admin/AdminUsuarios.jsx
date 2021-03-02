@@ -127,9 +127,9 @@ export class AdminUsuarios extends Component {
                                     Borrar
                                   </Button>
                                 </td>
-                                {/* <td>
+                                <td>
                                   <CambiarRolModal _id={_id}></CambiarRolModal>
-                                </td> */}
+                                </td>
                               </tr>
                             </tbody>
                           );
