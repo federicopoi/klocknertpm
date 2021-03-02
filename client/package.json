@@ -2,7 +2,6 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -10,6 +9,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "chart.js": "2.7.2",
+    "core-js": "^3.9.1",
     "file-saver": "^2.0.2",
     "history": "4.7.2",
     "moment": "^2.25.3",
@@ -17,6 +17,7 @@
     "prop-types": "^15.7.2",
     "qrcode.react": "^1.0.0",
     "react": "^16.8.3",
+    "react-app-polyfill": "^2.0.0",
     "react-chartjs-2": "^2.7.4",
     "react-dom": "^16.8.3",
     "react-easy-bar-chart": "0.0.2",
