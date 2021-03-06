@@ -69,11 +69,12 @@ class AñadirTarjeta extends Component {
     const numeroTarjeta = this.props.tarjetas.tarjetas.filter(
       ({ color }) => color === e.target.value
     );
-    const arrSliced = numeroTarjeta.slice(-1)[0];
-    const lastNumber = arrSliced.numero;
+    const numbersArr = numeroTarjeta.map(({ numero }) => numero);
+    const highestNumber = Math.max(...numbersArr);
+
     this.setState({
       [e.target.name]: e.target.value,
-      numero: parseInt(lastNumber) + 1,
+      numero: parseInt(highestNumber) + 1,
     });
   };
   onSubmit = (e) => {
