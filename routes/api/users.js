@@ -4,11 +4,6 @@ const bcrypt = require("bcryptjs");
 const config = require("config");
 const jwt = require("jsonwebtoken");
 const auth = require("../api/../../middleware/auth");
-const fileUpload = require("express-fileupload");
-router.use(fileUpload());
-var Papa = require("papaparse");
-const fs = require("fs");
-const file = fs.createReadStream("routes/api/initial.csv");
 
 // User Model
 const User = require("../../models/User");
@@ -85,23 +80,23 @@ module.exports = router;
 // @route GET api/users/init
 // @desc Add multiple users
 // @access Public
-router.get("/init", (req, res) => {
-  Papa.parse(file, {
-    delimiter: ";",
-    worker: true,
-    complete: function (results) {
-      const array = results.data.map((tj) => {
-        return {
-          legajo: tj[0],
-          pin: tj[1],
-          role: tj[2],
-        };
-      });
-      array.forEach((tj) => {
-        const newUser = new User(tj);
-        newUser.save();
-      });
-      return res.json(array);
-    },
-  });
-});
+// router.get("/init", (req, res) => {
+//   Papa.parse(file, {
+//     delimiter: ";",
+//     worker: true,
+//     complete: function (results) {
+//       const array = results.data.map((tj) => {
+//         return {
+//           legajo: tj[0],
+//           pin: tj[1],
+//           role: tj[2],
+//         };
+//       });
+//       array.forEach((tj) => {
+//         const newUser = new User(tj);
+//         newUser.save();
+//       });
+//       return res.json(array);
+//     },
+//   });
+// });
