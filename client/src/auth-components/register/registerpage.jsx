@@ -62,7 +62,7 @@ export class RegisterPage extends Component {
         break;
       case "pin":
         errors.pin =
-          value.length !== 6 ? "Pin tiene que ser de 6 caracteres" : "";
+          value.length < 6 ? "Pin tiene que 6 caracteres minimo" : "";
         break;
       default:
         break;
