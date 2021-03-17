@@ -67,7 +67,7 @@ export class AdminUsuarios extends Component {
                     <div className="d-sm-flex align-items-center">
                       <div className="">
                         <div>
-                          <h2 className="mb-3">ADMINISTRAR</h2>
+                          <h2 className="mb-3">Administrar</h2>
                         </div>
                       </div>
 
