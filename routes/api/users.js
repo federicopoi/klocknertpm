@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const config = require("config");
 const jwt = require("jsonwebtoken");
+const auth = require("../api/../../middleware/auth");
 
 // User Model
 const User = require("../../models/User");
@@ -38,15 +39,6 @@ router.post("/", (req, res) => {
       role,
     });
 
-    newUser.save().then((user) => {
-      res.json({
-        user: {
-          id: user.id,
-          email: user.email,
-          role: user.role,
-        },
-      });
-    });
     // Create salt $ hash
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -72,22 +64,6 @@ router.post("/", (req, res) => {
         });
       });
     });
-  });
-});
-
-// @route POST api/users/cambiarrol
-// @desc Cambiar Rol Usuario
-// @access Public
-router.post("/cambiarrol", (req, res) => {
-  const { _id, rol } = req.body;
-
-  // Simple validation
-  User.findOne({ _id }).exec((err, user) => {
-    if (err) console.log("Cambiar Rol  ", err);
-
-    user.role = rol;
-    user.save();
-    res.json(user);
   });
 });
 

@@ -107,7 +107,7 @@ export class AdminUsuarios extends Component {
                     <Table className="no-wrap v-middle" responsive>
                       <thead>
                         <tr className="border-0">
-                          <th className="border-0">Email</th>
+                          <th className="border-0">N° Legajo</th>
                           <th className="border-0">Rol</th>
                           <th className="border-0">Acciones</th>
                         </tr>

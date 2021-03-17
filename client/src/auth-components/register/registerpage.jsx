@@ -6,20 +6,27 @@ import { register } from "../../store/actions/authActions";
 import { clearErrors } from "../../store/actions/errorActions";
 import { Label, Input, Alert } from "reactstrap";
 import { withRouter, Redirect } from "react-router-dom";
+import { AvForm, AvField } from "availity-reactstrap-validation";
+
+const validEmailRegex = RegExp(
+  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+);
+const validateForm = (errors) => {
+  let valid = true;
+  Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
+  return valid;
+};
 
 export class RegisterPage extends Component {
   state = {
-    email: "",
-    password: "",
+    legajo: null,
+    pin: null,
     role: "",
     msg: null,
-  };
-
-  static propTypes = {
-    isAuthenticated: PropTypes.bool,
-    error: PropTypes.object.isRequired,
-    register: PropTypes.func.isRequired,
-    clearErrors: PropTypes.func.isRequired,
+    errors: {
+      legajo: "",
+      pin: "",
+    },
   };
 
   componentDidUpdate(prevProps) {
@@ -43,53 +50,101 @@ export class RegisterPage extends Component {
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  onSubmit = (e) => {
-    e.preventDefault();
-    const { username, email, password, role, acceso } = this.state;
+  handleChange = (event) => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    let errors = this.state.errors;
+
+    switch (name) {
+      case "legajo":
+        errors.legajo =
+          value.length > 6 ? "Se permite un maximo de 6 caracteres" : "";
+        break;
+      case "pin":
+        errors.pin =
+          value.length !== 6 ? "Pin tiene que ser de 6 caracteres" : "";
+        break;
+      default:
+        break;
+    }
+
+    this.setState({ errors, [name]: value });
+  };
+  // onSubmit = (e) => {
+  //   e.preventDefault();
+  //   const { email, password, role, acceso } = this.state;
+
+  //   // Create usre object
+  //   const newUser = {
+  //     email,
+  //     password,
+  //     role,
+  //   };
+
+  //   // Atempt to register
+  //   // this.props.register(newUser);
+  //   console.log(newUser);
+  // };
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const { legajo, pin, role } = this.state;
 
     // Create usre object
     const newUser = {
-      email,
-      password,
+      email: legajo,
+      password: pin,
       role,
     };
 
-    // Atempt to register
-    this.props.register(newUser);
+    if (validateForm(this.state.errors)) {
+      console.info("Valid Form");
+      if ((legajo !== null) & (pin !== null)) {
+        // Atempt to register
+        this.props.register(newUser);
+        console.log(newUser);
+      }
+    } else {
+      console.error("Invalid Form");
+    }
   };
 
   render() {
+    const { errors } = this.state;
     return (
       <div className="container h-100">
         <div className="row align-items-center h-100">
           <div className="col-6 mx-auto">
             {this.props.user && this.props.user.role === "Admin" && (
               <Card className="px-5 py-5">
-                <form onSubmit={this.onSubmit}>
+                <form onSubmit={this.handleSubmit}>
                   <h3>Registrar Usuario</h3>
-
                   <div className="form-group">
-                    <Label for="email">Email</Label>
+                    <Label for="pin">N° Legajo</Label>
                     <Input
-                      type="email"
-                      name="email"
-                      id="email"
-                      placeholder="Email"
+                      type="number"
+                      name="legajo"
+                      id="legajo"
+                      placeholder="Legajo"
                       className="mb-3"
-                      onChange={this.onChange}
+                      onChange={this.handleChange}
                     />
+                    {errors.legajo.length > 0 && (
+                      <span className="error text-danger">{errors.legajo}</span>
+                    )}
                   </div>
-
                   <div className="form-group">
-                    <Label for="password">Contraseña</Label>
+                    <Label for="pin">Pin</Label>
                     <Input
-                      type="password"
-                      name="password"
-                      id="password"
-                      placeholder="Password"
+                      type="number"
+                      name="pin"
+                      id="pin"
+                      placeholder="Pin"
                       className="mb-3"
-                      onChange={this.onChange}
+                      onChange={this.handleChange}
                     />
+                    {errors.pin.length > 0 && (
+                      <span className="error text-danger">{errors.pin}</span>
+                    )}
                   </div>
                   <Label for="color">Role</Label>
                   <Input
@@ -110,11 +165,11 @@ export class RegisterPage extends Component {
                   >
                     Subir
                   </button>
-                  {this.state.msg ? (
+                  {/* {this.state.msg ? (
                     <Alert color="danger" className="mt-3">
                       {this.state.msg}
                     </Alert>
-                  ) : null}
+                  ) : null} */}
                 </form>
               </Card>
             )}

@@ -55,27 +55,30 @@ export class LoginPage extends Component {
           <div className="col-6 mx-auto">
             <Card className="px-5 py-5">
               <form onSubmit={this.onSubmit}>
-                <h3>Iniciar Sesión</h3>
+                <h3 className="mb-3 text-center">Iniciar Sesión</h3>
 
                 <div className="form-group">
-                  <Label for="email">Email</Label>
+                  <Label for="legajo">N° Legajo</Label>
                   <Input
-                    type="email"
+                    type="number"
                     name="email"
                     id="email"
-                    placeholder="Email"
+                    placeholder="N° Legajo"
                     className="mb-3"
                     onChange={this.onChange}
                   />
                 </div>
 
                 <div className="form-group">
-                  <Label for="password">Password</Label>
+                  <Label for="pin">Pin</Label>
                   <Input
-                    type="password"
+                    type="number"
+                    class="pin"
+                    pattern="[0-9]*"
+                    inputmode="numeric"
                     name="password"
                     id="password"
-                    placeholder="Password"
+                    placeholder="Pin"
                     className="mb-3"
                     onChange={this.onChange}
                   />

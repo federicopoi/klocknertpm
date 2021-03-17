@@ -17,6 +17,7 @@
     "npm": "6.14.4"
   },
   "dependencies": {
+    "availity-reactstrap-validation": "^2.7.0",
     "bcryptjs": "^2.4.3",
     "body-parse": "^0.1.0",
     "cloudinary-react": "^1.6.8",
