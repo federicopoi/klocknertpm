@@ -25,6 +25,8 @@
     "config": "^3.3.1",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.7-alpha.3",
+    "express-ipfilter": "^1.1.2",
+    "ip-whitelist": "^1.2.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.10",
     "react-infinite-scroll-component": "^5.1.0",

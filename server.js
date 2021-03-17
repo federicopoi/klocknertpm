@@ -2,7 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 const config = require("config");
-
+const ipfilter = require("express-ipfilter").IpFilter;
+const ipWhitelist = require("ip-whitelist");
 const tarjetas = require("./routes/api/tarjetas");
 const filters = require("./routes/api/filters");
 const campos = require("./routes/api/campos");
