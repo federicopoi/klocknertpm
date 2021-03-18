@@ -45,7 +45,9 @@ export class LoginPage extends Component {
       password,
     };
     //Attempt to login
-    this.props.login(user);
+    if (window.location.href !== "https://klockner-tpm.herokuapp.com/login") {
+      this.props.login(user);
+    }
   };
 
   render() {
