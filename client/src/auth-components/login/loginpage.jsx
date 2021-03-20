@@ -54,7 +54,7 @@ export class LoginPage extends Component {
     return (
       <div className="container h-100">
         <div className="row align-items-center h-100">
-          <div className="col-6 mx-auto">
+          <div className=" mx-auto">
             <Card className="px-5 py-5">
               <form onSubmit={this.onSubmit}>
                 <h3 className="mb-3 text-center">Iniciar Sesión</h3>
