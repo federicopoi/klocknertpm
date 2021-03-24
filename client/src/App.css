@@ -133,6 +133,6 @@ footer {
 .dropdown:hover .dropdown-content {
   display: block;
 }
-input[type=number] {
+input[type="number"] {
   -webkit-text-security: disc;
 }
