@@ -1,16 +1,11 @@
 import React, { Component } from "react";
 import { Card } from "reactstrap";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import { register } from "../../store/actions/authActions";
 import { clearErrors } from "../../store/actions/errorActions";
 import { Label, Input, Alert } from "reactstrap";
 import { withRouter, Redirect } from "react-router-dom";
-import { AvForm, AvField } from "availity-reactstrap-validation";
 
-const validEmailRegex = RegExp(
-  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-);
 const validateForm = (errors) => {
   let valid = true;
   Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
@@ -70,26 +65,11 @@ export class RegisterPage extends Component {
 
     this.setState({ errors, [name]: value });
   };
-  // onSubmit = (e) => {
-  //   e.preventDefault();
-  //   const { email, password, role, acceso } = this.state;
 
-  //   // Create usre object
-  //   const newUser = {
-  //     email,
-  //     password,
-  //     role,
-  //   };
-
-  //   // Atempt to register
-  //   // this.props.register(newUser);
-  //   console.log(newUser);
-  // };
   handleSubmit = (event) => {
     event.preventDefault();
     const { legajo, pin, role } = this.state;
 
-    // Create usre object
     const newUser = {
       email: legajo,
       password: pin,
@@ -165,11 +145,6 @@ export class RegisterPage extends Component {
                   >
                     Subir
                   </button>
-                  {/* {this.state.msg ? (
-                    <Alert color="danger" className="mt-3">
-                      {this.state.msg}
-                    </Alert>
-                  ) : null} */}
                 </form>
               </Card>
             )}

@@ -4,9 +4,7 @@ import QRCode from "qrcode.react";
 import PrintComponents from "react-print-components";
 const QRModal = (props) => {
   const [modal, setModal] = useState(false);
-
   const toggle = () => setModal(!modal);
-
   const link = props.completePath + props.path;
 
   return (

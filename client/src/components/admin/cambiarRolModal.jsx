@@ -7,9 +7,6 @@ import {
   Form,
   Label,
   Input,
-  FormGroup,
-  NavLink,
-  Alert,
 } from "reactstrap";
 import { connect } from "react-redux";
 import { cambiarRol } from "../../store/actions/usersActions";
@@ -54,7 +51,6 @@ class CambiarRolModal extends Component {
         <Button
           className="bg-secondary border-secondary ml-3"
           onClick={this.toggle}
-          href=""
         >
           Cambiar Rol
         </Button>

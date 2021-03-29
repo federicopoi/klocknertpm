@@ -8,13 +8,8 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Card,
-  Button,
-  CardTitle,
-  CardText,
   Row,
   Col,
-  CardBody,
 } from "reactstrap";
 import classnames from "classnames";
 import GraficoAmarillas from "./tarjetasamarillas/GraficoAmarillas";

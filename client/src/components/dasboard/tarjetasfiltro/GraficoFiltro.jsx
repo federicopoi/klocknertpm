@@ -118,9 +118,9 @@ export class GraficoFiltro extends Component {
 
     const fechastarjetasUnicasRango = [];
 
-    if (endDate.isBefore(startDate)) {
-      throw "End date must be greated than start date.";
-    }
+    // if (endDate.isBefore(startDate)) {
+    //   throw "End date must be greated than start date.";
+    // }
 
     while (startDate.isBefore(endDate)) {
       fechastarjetasUnicasRango.push(startDate.format("YYYY-MM"));

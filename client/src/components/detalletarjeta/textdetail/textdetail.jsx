@@ -2,20 +2,12 @@ import React, { Component } from "react";
 import CerrarTarjetaModal from "../cerrartarjeta/CerrarTarjetaModal";
 import CerrarTarjetaAmarillaModal from "../cerrartarjeta/CerrarTarjetaAmarillaModal";
 import QRModal from "./QRModal";
-import { withRouter, Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { borrarTarjeta } from "../../../store/actions/tarjetaActions";
 import PlanificacionModal from "../planificaciondetalle/PlanificacionModal";
 import UploadImageModal from "../imagendetalle/UploadImageModal";
-import {
-  Button,
-  Row,
-  Col,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
+import { Button, Row, Col } from "reactstrap";
 import EditarTarjetaModal from "../editartarjeta/EditarTarjetaModal";
 import EditarTarjetaModalAmarilla from "../editartarjeta/EditarTarjetaModalAmarilla";
 export class TextDetail extends Component {

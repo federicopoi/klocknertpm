@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Card,
-  CardBody,
-  Table,
-} from "reactstrap";
+import { Card, CardBody, Table } from "reactstrap";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 
 const TableModal = (props) => {

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import {
   Button,
   Modal,
@@ -8,9 +7,6 @@ import {
   Form,
   Label,
   Input,
-  FormGroup,
-  NavLink,
-  Alert,
 } from "reactstrap";
 import { connect } from "react-redux";
 import { agregarFilter } from "../../store/actions/filterActions";

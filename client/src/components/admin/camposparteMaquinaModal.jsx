@@ -8,10 +8,6 @@ import {
   Label,
   Input,
   FormGroup,
-  NavLink,
-  Alert,
-  Row,
-  Col,
 } from "reactstrap";
 import { connect } from "react-redux";
 import { parteMaquina } from "../../store/actions/camposActions";
@@ -40,7 +36,6 @@ class CamposParteMaquinaModal extends Component {
     e.preventDefault();
     const { _id, name } = this.state;
 
-    // Crear Campo
     const nuevoCampos = {
       _id,
       name,

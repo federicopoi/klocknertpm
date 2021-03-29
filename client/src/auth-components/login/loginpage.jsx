@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Card } from "reactstrap";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import { login } from "../../store/actions/authActions";
 import { clearErrors } from "../../store/actions/errorActions";
 import { Label, Input, Alert } from "reactstrap";
@@ -44,10 +43,8 @@ export class LoginPage extends Component {
       email,
       password,
     };
-    //Attempt to login
-    if (window.location.href !== "https://klockner-tpm.herokuapp.com/login") {
-      this.props.login(user);
-    }
+    // Attempt to login
+    this.props.login(user);
   };
 
   render() {
@@ -58,7 +55,6 @@ export class LoginPage extends Component {
             <Card className="px-5 py-5">
               <form onSubmit={this.onSubmit}>
                 <h3 className="mb-3 text-center">Iniciar Sesión</h3>
-
                 <div className="form-group">
                   <Label for="legajo">N° Legajo</Label>
                   <Input
@@ -70,7 +66,6 @@ export class LoginPage extends Component {
                     onChange={this.onChange}
                   />
                 </div>
-
                 <div className="form-group">
                   <Label for="pin">Pin</Label>
                   <Input
@@ -85,7 +80,6 @@ export class LoginPage extends Component {
                     onChange={this.onChange}
                   />
                 </div>
-
                 {this.state.msg ? (
                   <Alert color="danger" className="mt-3">
                     {this.state.msg}

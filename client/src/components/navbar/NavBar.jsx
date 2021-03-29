@@ -8,7 +8,6 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
-
 import { connect } from "react-redux";
 import { logout } from "../../store/actions/authActions";
 import Logo from "./logo.png";

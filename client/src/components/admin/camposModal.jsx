@@ -7,9 +7,6 @@ import {
   Form,
   Label,
   Input,
-  FormGroup,
-  NavLink,
-  Alert,
 } from "reactstrap";
 import { connect } from "react-redux";
 import { agregarCampos } from "../../store/actions/camposActions";
@@ -33,7 +30,6 @@ class CampoModal extends Component {
     e.preventDefault();
     const { name, value } = this.state;
 
-    // Crear Campo
     const nuevoCampos = {
       name,
       value,

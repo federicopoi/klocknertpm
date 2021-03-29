@@ -19,7 +19,6 @@ import {
 } from "reactstrap";
 import Select from "react-select";
 import PresetModal from "./PresetModal";
-import { Redirect } from "react-router-dom";
 
 const options = [
   { value: "numero", label: "N°" },

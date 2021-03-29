@@ -1,14 +1,5 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Card,
-  CardBody,
-  Media,
-} from "reactstrap";
+import { Button, Modal, ModalHeader, ModalBody, Media } from "reactstrap";
 import Image from "./RIImage.png";
 const RIModal = (props) => {
   const [modal, setModal] = useState(false);
@@ -21,7 +12,7 @@ const RIModal = (props) => {
   return (
     <div>
       <Button color="danger" onClick={toggle} color="link">
-        ℹ️
+        <span role="img">ℹ️</span>
       </Button>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Riesgo Inicial</ModalHeader>

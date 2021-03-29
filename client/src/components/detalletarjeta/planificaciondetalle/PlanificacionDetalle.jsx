@@ -1,18 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  Input,
-  Table,
-  Col,
-  Row,
-  Button,
-  Form,
-  FormGroup,
-} from "reactstrap";
+import { Card, CardBody, Col, Row } from "reactstrap";
 import { connect } from "react-redux";
 import {
   agregarPlanificacion,

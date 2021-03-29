@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Card, CardBody, Col, Row } from "reactstrap";
 
 const CerradaDetalle = (props) => {

@@ -35,8 +35,6 @@ export class AbiertaDetalle extends Component {
                 sustoExperimentado,
                 sustoObservado,
                 impactoAmbiente,
-                planta,
-                photo,
               }) => {
                 return (
                   <div>

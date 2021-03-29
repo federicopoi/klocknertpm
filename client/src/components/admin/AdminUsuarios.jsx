@@ -12,7 +12,7 @@ import {
   Label,
   Input,
 } from "reactstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import CampoModal from "./camposModal";
 import CambiarRolModal from "./cambiarRolModal";
 import CamposParteMaquinaModal from "./camposparteMaquinaModal";
