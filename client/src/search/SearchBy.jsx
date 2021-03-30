@@ -1,7 +1,18 @@
 import React, { Component } from "react";
-import { Container, Input, Label, Button, Row, Col } from "reactstrap";
+import {
+  Container,
+  Input,
+  Label,
+  Button,
+  Row,
+  Col,
+  Table,
+  Card,
+  CardBody,
+} from "reactstrap";
 import { getTarjetas } from "../store/actions/tarjetaActions";
 import { connect } from "react-redux";
+import moment from "moment";
 import { Link, Redirect } from "react-router-dom";
 class SearchBy extends Component {
   componentDidMount() {
@@ -24,7 +35,7 @@ class SearchBy extends Component {
         return color === this.state.color && numero === this.state.numero;
       })
       .map((item) => {
-        return item._id;
+        return item;
       });
 
     const test = tarjetas
@@ -83,11 +94,147 @@ class SearchBy extends Component {
                 id="numero"
                 onChange={this.onChange}
               ></Input>
-              <Link to={{ pathname: `/tarjeta/${tarjetaFinal[0]}` }}>
+              {/* <Link to={{ pathname: `/tarjeta/${tarjetaFinal[0]}` }}>
                 <Button color="secondary" className="btn mt-3">
                   Buscar
                 </Button>
-              </Link>
+              </Link> */}
+              {this.state.color && this.state.numero && (
+                <Card className="mt-3">
+                  <CardBody>
+                    <Table className="no-wrap v-middle" responsive>
+                      <div>
+                        <thead>
+                          <tr className="border-0">
+                            <th className="border-0">N°</th>
+                            <th className="border-0">Color</th>
+                            <th className="border-0">Equipo autonomo</th>
+                            <th className="border-0">Prioridad</th>
+
+                            <th className="border-0">Fecha apertura</th>
+                            <th className="border-0">Descripcion anomalia</th>
+                            <th className="border-0">Estado actual</th>
+                          </tr>
+                        </thead>
+                        {tarjetaFinal &&
+                          tarjetaFinal.map(
+                            ({
+                              numero,
+                              color,
+                              prioridad,
+                              equipo,
+                              fecha,
+                              descripcion,
+                              estado,
+                              _id,
+                            }) => {
+                              const timeDiferrence = moment().diff(
+                                fecha,
+                                "days"
+                              );
+                              return (
+                                <tbody key={_id}>
+                                  <tr>
+                                    <td>
+                                      <div className="d-flex no-block align-items-center">
+                                        <div className="">
+                                          <Link
+                                            to={{ pathname: `/tarjeta/${_id}` }}
+                                          >
+                                            <h5 className="mb-0 font-16 font-medium">
+                                              {numero}
+                                            </h5>
+                                          </Link>
+                                        </div>
+                                      </div>
+                                    </td>
+                                    {color === "Azul" ? (
+                                      <td>
+                                        <li className="border-0 p-0 text-info list-inline-item">
+                                          <i className="fa fa-circle"></i>{" "}
+                                          {color}
+                                        </li>
+                                      </td>
+                                    ) : null}
+                                    {color === "Roja" ? (
+                                      <td>
+                                        <li className="border-0 p-0 text-danger list-inline-item">
+                                          <i className="fa fa-circle"></i>{" "}
+                                          {color}
+                                        </li>
+                                      </td>
+                                    ) : null}
+                                    {color === "Verde" ? (
+                                      <td>
+                                        <li className="border-0 p-0 text-success list-inline-item">
+                                          <i className="fa fa-circle"></i>{" "}
+                                          {color}
+                                        </li>
+                                      </td>
+                                    ) : null}
+                                    {color === "Amarilla" ? (
+                                      <td>
+                                        <li className="border-0 p-0 text-warning list-inline-item">
+                                          <i className="fa fa-circle"></i>{" "}
+                                          {color}
+                                        </li>
+                                      </td>
+                                    ) : null}
+                                    <td>{equipo}</td>
+                                    <td>
+                                      {prioridad}
+
+                                      {prioridad === "Alta" &&
+                                        estado === "Abierta" &&
+                                        timeDiferrence >= 15 && (
+                                          <li className="border-0 p-0 text-danger list-inline-item">
+                                            ⚠️
+                                          </li>
+                                        )}
+                                      {prioridad === "Media" &&
+                                        estado === "Abierta" &&
+                                        timeDiferrence >= 30 && (
+                                          <li className="border-0 p-0 text-danger list-inline-item">
+                                            ⚠️
+                                          </li>
+                                        )}
+                                      {prioridad === "Baja" &&
+                                        estado === "Abierta" &&
+                                        timeDiferrence >= 60 && (
+                                          <li className="border-0 p-0 text-danger list-inline-item">
+                                            ⚠️
+                                          </li>
+                                        )}
+                                    </td>
+
+                                    <td>
+                                      {moment(fecha).format("DD/MM/YYYY LTS")}
+                                    </td>
+                                    <td>{descripcion}</td>
+
+                                    <td>{estado}</td>
+                                    <td>
+                                      <Link
+                                        to={{ pathname: `/tarjeta/${_id}` }}
+                                      >
+                                        <Button
+                                          color="success"
+                                          className="btn bg-secondary border border-secondary"
+                                        >
+                                          Ver detalle
+                                        </Button>
+                                      </Link>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              );
+                            }
+                          )}
+                      </div>
+                    </Table>
+                  </CardBody>
+                </Card>
+              )}
             </Container>
           </div>
         </div>

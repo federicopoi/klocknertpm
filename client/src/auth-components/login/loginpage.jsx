@@ -70,6 +70,7 @@ export class LoginPage extends Component {
                   <Label for="pin">Pin</Label>
                   <Input
                     type="number"
+                    secureTextEntry={true}
                     class="pin"
                     pattern="[0-9]*"
                     inputmode="numeric"

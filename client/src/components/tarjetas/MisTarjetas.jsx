@@ -121,7 +121,7 @@ export const TarjetasTable = (props) => {
                     dataLength={current.length}
                     next={getMoreData}
                     hasMore={hasMore}
-                    loader={<h4>Loading...</h4>}
+                    loader={<h4>Cargando...</h4>}
                   >
                     <div>
                       <thead>
