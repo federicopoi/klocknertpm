@@ -5,309 +5,7 @@ import { loadUser } from "../../store/actions/authActions";
 import { Card, CardBody, Row, Col, Table, Button, Container } from "reactstrap";
 import moment from "moment";
 import { Link, Redirect } from "react-router-dom";
-import InfiniteScroll from "react-infinite-scroll-component";
-
-const useSortableData = (items, config = null) => {
-  const [sortConfig, setSortConfig] = React.useState(config);
-
-  const sortedItems = React.useMemo(() => {
-    let sortableItems = [...items];
-    if (sortConfig !== null) {
-      sortableItems.sort((a, b) => {
-        if (a[sortConfig.key] < b[sortConfig.key]) {
-          return sortConfig.direction === "ascending" ? -1 : 1;
-        }
-        if (a[sortConfig.key] > b[sortConfig.key]) {
-          return sortConfig.direction === "ascending" ? 1 : -1;
-        }
-        return 0;
-      });
-    }
-    return sortableItems;
-  }, [items, sortConfig]);
-
-  const requestSort = (key) => {
-    let direction = "ascending";
-    if (
-      sortConfig &&
-      sortConfig.key === key &&
-      sortConfig.direction === "ascending"
-    ) {
-      direction = "descending";
-    }
-    setSortConfig({ key, direction });
-  };
-
-  return { items: sortedItems, requestSort, sortConfig };
-};
-
-export const TarjetasTable = (props) => {
-  const { items, requestSort, sortConfig } = useSortableData(props.tarjetas);
-  const getClassNamesFor = (name) => {
-    if (!sortConfig) {
-      return;
-    }
-    return sortConfig.key === name ? sortConfig.direction : undefined;
-  };
-
-  const [count, setCount] = React.useState({
-    prev: 0,
-    next: items.length / 10,
-  });
-
-  const [hasMore, setHasMore] = React.useState(true);
-  const [current, setCurrent] = React.useState(
-    items.slice(count.prev, count.next)
-  );
-  const getMoreData = () => {
-    if (current.length === items.length) {
-      setHasMore(false);
-      return;
-    }
-    setTimeout(() => {
-      setCurrent(
-        current.concat(
-          items.slice(
-            count.prev + items.length / 10,
-            count.next + items.length / 10
-          )
-        )
-      );
-    }, 2000);
-    setCount((prevState) => ({
-      prev: prevState.prev + items.length / 10,
-      next: prevState.next + items.length / 10,
-    }));
-  };
-
-  return (
-    <div>
-      <div className="page-wrapper d-block">
-        <div className="page-content container-fluid">
-          <Container>
-            <Row>
-              <Col>
-                <div className="d-sm-flex align-items-center">
-                  <div className="">
-                    <div>
-                      <h2 className="mb-3">Tarjetas</h2>
-                    </div>
-
-                    <div className="ml-auto d-sm-flex no-block align-items-center mb-3 d-sm-flex">
-                      <div className="dl">
-                        <h5 className="font-weight-normal">
-                          Todas las tarjetas en la base de datos
-                        </h5>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="ml-auto d-sm-flex no-block align-items-center mb-3">
-                    <Col>
-                      <Link to="/agregartarjeta">
-                        <Button color="success" className="btn">
-                          Agregar Tarjeta
-                        </Button>
-                      </Link>
-                    </Col>
-                  </div>
-                </div>
-              </Col>
-            </Row>
-
-            <Card>
-              <CardBody>
-                <Table className="no-wrap v-middle" responsive>
-                  <InfiniteScroll
-                    dataLength={current.length}
-                    next={getMoreData}
-                    hasMore={hasMore}
-                    loader={<h4>Cargando...</h4>}
-                  >
-                    <div>
-                      <thead>
-                        <tr className="border-0">
-                          <th className="border-0">
-                            N°
-                            <Button
-                              type="button"
-                              onClick={() => requestSort("numero")}
-                              className={getClassNamesFor("numero")}
-                              color="link"
-                            ></Button>
-                          </th>
-                          <th className="border-0">
-                            Color
-                            <Button
-                              type="button"
-                              onClick={() => requestSort("color")}
-                              className={getClassNamesFor("color")}
-                              color="link"
-                            ></Button>
-                          </th>
-                          <th className="border-0">
-                            Equipo autonomo
-                            <Button
-                              type="button"
-                              onClick={() => requestSort("equipo")}
-                              className={getClassNamesFor("equipo")}
-                              color="link"
-                            ></Button>
-                          </th>
-                          <th className="border-0">
-                            Prioridad
-                            <Button
-                              type="button"
-                              onClick={() => requestSort("prioridad")}
-                              className={getClassNamesFor("prioridad")}
-                              color="link"
-                            ></Button>
-                          </th>
-
-                          <th className="border-0">
-                            Fecha apertura
-                            <Button
-                              type="button"
-                              onClick={() => requestSort("fecha")}
-                              color="link"
-                              className={getClassNamesFor("fecha")}
-                            ></Button>
-                          </th>
-                          <th className="border-0">
-                            Descripcion anomalia
-                            <Button
-                              type="button"
-                              onClick={() => requestSort("descripcion")}
-                              color="link"
-                              className={getClassNamesFor("descripcion")}
-                            ></Button>
-                          </th>
-                          <th className="border-0">
-                            Estado actual
-                            <Button
-                              type="button"
-                              onClick={() => requestSort("estado")}
-                              color="link"
-                              className={getClassNamesFor("estado")}
-                            ></Button>
-                          </th>
-                        </tr>
-                      </thead>
-                      {current &&
-                        current.map(
-                          ({
-                            numero,
-                            color,
-                            prioridad,
-                            equipo,
-                            fecha,
-                            descripcion,
-                            estado,
-                            _id,
-                          }) => {
-                            const timeDiferrence = moment().diff(fecha, "days");
-                            return (
-                              <tbody key={_id}>
-                                <tr>
-                                  <td>
-                                    <div className="d-flex no-block align-items-center">
-                                      <div className="">
-                                        <Link
-                                          to={{ pathname: `/tarjeta/${_id}` }}
-                                        >
-                                          <h5 className="mb-0 font-16 font-medium">
-                                            {numero}
-                                          </h5>
-                                        </Link>
-                                      </div>
-                                    </div>
-                                  </td>
-                                  {color === "Azul" ? (
-                                    <td>
-                                      <li className="border-0 p-0 text-info list-inline-item">
-                                        <i className="fa fa-circle"></i> {color}
-                                      </li>
-                                    </td>
-                                  ) : null}
-                                  {color === "Roja" ? (
-                                    <td>
-                                      <li className="border-0 p-0 text-danger list-inline-item">
-                                        <i className="fa fa-circle"></i> {color}
-                                      </li>
-                                    </td>
-                                  ) : null}
-                                  {color === "Verde" ? (
-                                    <td>
-                                      <li className="border-0 p-0 text-success list-inline-item">
-                                        <i className="fa fa-circle"></i> {color}
-                                      </li>
-                                    </td>
-                                  ) : null}
-                                  {color === "Amarilla" ? (
-                                    <td>
-                                      <li className="border-0 p-0 text-warning list-inline-item">
-                                        <i className="fa fa-circle"></i> {color}
-                                      </li>
-                                    </td>
-                                  ) : null}
-                                  <td>{equipo}</td>
-                                  <td>
-                                    {prioridad}
-
-                                    {prioridad === "Alta" &&
-                                      estado === "Abierta" &&
-                                      timeDiferrence >= 15 && (
-                                        <li className="border-0 p-0 text-danger list-inline-item">
-                                          ⚠️
-                                        </li>
-                                      )}
-                                    {prioridad === "Media" &&
-                                      estado === "Abierta" &&
-                                      timeDiferrence >= 30 && (
-                                        <li className="border-0 p-0 text-danger list-inline-item">
-                                          ⚠️
-                                        </li>
-                                      )}
-                                    {prioridad === "Baja" &&
-                                      estado === "Abierta" &&
-                                      timeDiferrence >= 60 && (
-                                        <li className="border-0 p-0 text-danger list-inline-item">
-                                          ⚠️
-                                        </li>
-                                      )}
-                                  </td>
-
-                                  <td>
-                                    {moment(fecha).format("DD/MM/YYYY LTS")}
-                                  </td>
-                                  <td>{descripcion}</td>
-
-                                  <td>{estado}</td>
-                                  <td>
-                                    <Link to={{ pathname: `/tarjeta/${_id}` }}>
-                                      <Button
-                                        color="success"
-                                        className="btn bg-secondary border border-secondary"
-                                      >
-                                        Ver detalle
-                                      </Button>
-                                    </Link>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            );
-                          }
-                        )}
-                    </div>
-                  </InfiniteScroll>
-                </Table>
-              </CardBody>
-            </Card>
-          </Container>
-        </div>
-      </div>
-    </div>
-  );
-};
+import MaterialTable from "material-table";
 
 export class MisTarjetas extends Component {
   componentDidMount() {
@@ -320,12 +18,115 @@ export class MisTarjetas extends Component {
     if (this.props.isAuthenticated === false && this.props.isLoading === false)
       return <Redirect to="/login" />;
 
+    const { tarjetas } = this.props.tarjetas;
+
     return (
       <div>
-        <TarjetasTable
-          tarjetas={this.props.tarjetas.tarjetas}
-          user={this.props.user}
-        />
+        <div>
+          <div className="page-wrapper d-block">
+            <div className="page-content container-fluid">
+              <Container>
+                <Row>
+                  <Col>
+                    <div className="d-sm-flex align-items-center">
+                      <div className="">
+                        <div>
+                          <h2 className="mb-3">Tarjetas</h2>
+                        </div>
+
+                        <div className="ml-auto d-sm-flex no-block align-items-center mb-3 d-sm-flex">
+                          <div className="dl">
+                            <h5 className="font-weight-normal">
+                              Todas las tarjetas en la base de datos
+                            </h5>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="ml-auto d-sm-flex no-block align-items-center mb-3">
+                        <Col>
+                          <Link to="/agregartarjeta">
+                            <Button color="success" className="btn">
+                              Agregar Tarjeta
+                            </Button>
+                          </Link>
+                        </Col>
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+
+                <MaterialTable
+                  style={{ padding: "30px" }}
+                  title=""
+                  data={tarjetas}
+                  options={{
+                    filtering: true,
+                    sorting: true,
+                    exportButton: true,
+                    search: true,
+                    pageSize: 10,
+                    emptyRowsWhenPaging: true,
+                    pageSizeOptions: [10, 20, 100, tarjetas.length],
+                  }}
+                  columns={[
+                    { title: "N°", field: "numero" },
+                    {
+                      title: "Color",
+                      field: "color",
+                      render: (rowData) =>
+                        (rowData.color === "Verde" && (
+                          <li className="border-0 p-0 text-success list-inline-item">
+                            <i className="fa fa-circle"></i> {rowData.color}
+                          </li>
+                        )) ||
+                        (rowData.color === "Roja" && (
+                          <li className="border-0 p-0 text-danger list-inline-item">
+                            <i className="fa fa-circle"></i> {rowData.color}
+                          </li>
+                        )) ||
+                        (rowData.color === "Azul" && (
+                          <li className="border-0 p-0 text-info list-inline-item">
+                            <i className="fa fa-circle"></i> {rowData.color}
+                          </li>
+                        )) ||
+                        (rowData.color === "Amarilla" && (
+                          <li className="border-0 p-0 text-warning list-inline-item">
+                            <i className="fa fa-circle"></i> {rowData.color}
+                          </li>
+                        )),
+                    },
+                    { title: "Equipo Autonomo", field: "equipo" },
+                    { title: "Prioridad", field: "prioridad" },
+                    {
+                      title: "Fecha apertura",
+                      field: "fecha",
+                      render: (rowData) =>
+                        moment(rowData.fecha).format("DD/MM/YYYY LTS"),
+                    },
+                    { title: "Descripción anomalia", field: "descripcion" },
+                    {
+                      title: "Estado actual",
+                      field: "estado",
+                    },
+                    {
+                      title: "",
+                      render: (rowData) => (
+                        <Link to={{ pathname: `/tarjeta/${rowData._id}` }}>
+                          <Button
+                            color="success"
+                            className="btn bg-secondary border border-secondary"
+                          >
+                            Ver detalle
+                          </Button>
+                        </Link>
+                      ),
+                    },
+                  ]}
+                />
+              </Container>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
