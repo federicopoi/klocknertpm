@@ -20,6 +20,53 @@ export class MisTarjetas extends Component {
 
     const { tarjetas } = this.props.tarjetas;
 
+    function customRender(
+      value,
+      renderType,
+      renderFunc,
+      field1,
+      field2,
+      ...args
+    ) {
+      if (renderType === "row") {
+        return renderFunc(value[field1], value[field2], ...args);
+      }
+      if (renderType === "group") {
+        return value;
+      }
+    }
+    function renderCellData(numero, _id) {
+      return (
+        <Link to={{ pathname: `/tarjeta/${_id}` }}>
+          <h5 className="mb-0 font-16 font-medium">{numero}</h5>
+        </Link>
+      );
+    }
+    function renderCellData2(color) {
+      return (
+        (color === "Verde" && (
+          <li className="border-0 p-0 text-success list-inline-item">
+            <i className="fa fa-circle"></i> {color}
+          </li>
+        )) ||
+        (color === "Roja" && (
+          <li className="border-0 p-0 text-danger list-inline-item">
+            <i className="fa fa-circle"></i> {color}
+          </li>
+        )) ||
+        (color === "Azul" && (
+          <li className="border-0 p-0 text-info list-inline-item">
+            <i className="fa fa-circle"></i> {color}
+          </li>
+        )) ||
+        (color === "Amarilla" && (
+          <li className="border-0 p-0 text-warning list-inline-item">
+            <i className="fa fa-circle"></i> {color}
+          </li>
+        ))
+      );
+    }
+
     return (
       <div>
         <div>
@@ -56,7 +103,6 @@ export class MisTarjetas extends Component {
                 </Row>
 
                 <MaterialTable
-                  style={{ padding: "30px" }}
                   title=""
                   data={tarjetas}
                   options={{
@@ -67,33 +113,57 @@ export class MisTarjetas extends Component {
                     pageSize: 10,
                     emptyRowsWhenPaging: true,
                     pageSizeOptions: [10, 20, 100, tarjetas.length],
+                    grouping: true,
+                  }}
+                  localization={{
+                    pagination: {
+                      labelDisplayedRows: "{from}-{to} of {count}",
+                      labelRowsSelect: "filas",
+                    },
+                    toolbar: {
+                      nRowsSelected: "{0} row(s) selected",
+                      searchPlaceholder: "Buscar",
+                      searchTooltip: "Buscar",
+                      exportTitle: "Exportar",
+                      exportAriaLabel: "Exportar",
+                    },
+                    grouping: {
+                      placeholder:
+                        "Arrastra los encabezados aquí para agruparlos por",
+                    },
+                    header: {
+                      actions: "Acciones",
+                    },
+                    body: {
+                      emptyDataSourceMessage: "Sin datos para mostrar",
+                      filterRow: {
+                        filterTooltip: "Filtrar",
+                      },
+                    },
                   }}
                   columns={[
-                    { title: "N°", field: "numero" },
+                    {
+                      title: "N°",
+                      field: "numero",
+                      render: (value, renderType) =>
+                        customRender(
+                          value,
+                          renderType,
+                          renderCellData,
+                          "numero",
+                          "_id"
+                        ),
+                    },
                     {
                       title: "Color",
                       field: "color",
-                      render: (rowData) =>
-                        (rowData.color === "Verde" && (
-                          <li className="border-0 p-0 text-success list-inline-item">
-                            <i className="fa fa-circle"></i> {rowData.color}
-                          </li>
-                        )) ||
-                        (rowData.color === "Roja" && (
-                          <li className="border-0 p-0 text-danger list-inline-item">
-                            <i className="fa fa-circle"></i> {rowData.color}
-                          </li>
-                        )) ||
-                        (rowData.color === "Azul" && (
-                          <li className="border-0 p-0 text-info list-inline-item">
-                            <i className="fa fa-circle"></i> {rowData.color}
-                          </li>
-                        )) ||
-                        (rowData.color === "Amarilla" && (
-                          <li className="border-0 p-0 text-warning list-inline-item">
-                            <i className="fa fa-circle"></i> {rowData.color}
-                          </li>
-                        )),
+                      render: (value, renderType) =>
+                        customRender(
+                          value,
+                          renderType,
+                          renderCellData2,
+                          "color"
+                        ),
                     },
                     { title: "Equipo Autonomo", field: "equipo" },
                     { title: "Prioridad", field: "prioridad" },
