@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import CanvasJSReact from "../canvasjs.react";
-import { Label, Input } from "reactstrap";
 import TableModalAutonomia from "../tablemodalautonomia/TableModalAutonomia";
-import { Row, Col, Card, CardBody } from "reactstrap";
+import { Row, Col, Card, CardBody, Label, Input } from "reactstrap";
 import moment from "moment";
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 var CanvasJS = CanvasJSReact.CanvasJS;
@@ -11,6 +10,7 @@ export class GraficoAutonomia extends Component {
     super();
     this.state = {
       equipo: "",
+      numberMonths: "12",
     };
     this.toggleDataSeries = this.toggleDataSeries.bind(this);
   }
@@ -24,9 +24,13 @@ export class GraficoAutonomia extends Component {
     this.chart.render();
   }
   onChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
+    e.target.value === "Seleccionar meses"
+      ? this.setState({
+          [e.target.name]: 12,
+        })
+      : this.setState({
+          [e.target.name]: e.target.value,
+        });
   };
 
   render() {
@@ -79,10 +83,12 @@ export class GraficoAutonomia extends Component {
       startDate.add(1, "month");
     }
 
-    console.log(fechastarjetasUnicasRango);
+    const fechastarjetasUnicasRangoCut = fechastarjetasUnicasRango.slice(
+      Math.max(fechastarjetasUnicasRango.length - this.state.numberMonths, 0)
+    );
 
     // Numero total de tarjetas de cada mes (no acumulado)
-    let array1 = fechastarjetasUnicasRango.sort().map((item, index) => {
+    let array1 = fechastarjetasUnicasRangoCut.sort().map((item, index) => {
       return newFilter.filter(
         ({ estado, fecha, color }) =>
           color === "Azul" &&
@@ -97,7 +103,7 @@ export class GraficoAutonomia extends Component {
     );
 
     // Numero total de tarjetas de cada mes (no acumulado)
-    let array2 = fechastarjetasUnicasRango.sort().map((item, index) => {
+    let array2 = fechastarjetasUnicasRangoCut.sort().map((item, index) => {
       return newFilter.filter(
         ({ estado, fecha, convertida }) =>
           convertida === true &&
@@ -113,7 +119,7 @@ export class GraficoAutonomia extends Component {
 
     console.log(array2Acum);
     // Numero total de tarjetas de cada mes (no acumulado)
-    let array3 = fechastarjetasUnicasRango.sort().map((item, index) => {
+    let array3 = fechastarjetasUnicasRangoCut.sort().map((item, index) => {
       return newFilter.filter(
         ({ estado, fecha }) =>
           estado === "Cerrada" && fecha.slice(0, 7) === item.slice(0, 7)
@@ -125,20 +131,20 @@ export class GraficoAutonomia extends Component {
       array3.slice(0, index + 1).reduce((a, b) => a + b)
     );
 
-    console.log(array3Acum);
-
     // Numero total de tarjetas de cada mes (no acumulado)
-    let arrayAcumFinal = fechastarjetasUnicasRango.sort().map((item, index) => {
-      return (
-        ((array1Acum[index] + array2Acum[index]) / array3Acum[index]) * 100
-      );
-    });
+    let arrayAcumFinal = fechastarjetasUnicasRangoCut
+      .sort()
+      .map((item, index) => {
+        return (
+          ((array1Acum[index] + array2Acum[index]) / array3Acum[index]) * 100
+        );
+      });
 
     console.log(arrayAcumFinal);
 
     // Datos para el grafico
     const ConvertidasData = [
-      fechastarjetasUnicasRango.sort().map((item, index) => {
+      fechastarjetasUnicasRangoCut.sort().map((item, index) => {
         return {
           x: new Date(
             parseInt(item.slice(0, 4)),
@@ -148,6 +154,14 @@ export class GraficoAutonomia extends Component {
         };
       }),
     ];
+
+    const arrayMonths = [];
+
+    for (let i = 1; i < fechastarjetasUnicasRango.length + 1; i++) {
+      arrayMonths.push(i);
+    }
+
+    arrayMonths.reverse();
 
     CanvasJS.addCultureInfo("es", {
       decimalSeparator: ",", // Observe ToolTip Number Format
@@ -211,18 +225,36 @@ export class GraficoAutonomia extends Component {
             <Card>
               <CardBody>
                 <h3 className="mb-3">Indice de autonomia</h3>
+
                 <CanvasJSChart
                   culture="en"
                   options={options}
                   onRef={(ref) => (this.chart = ref)}
                 />
+                <Input
+                  type="select"
+                  name="numberMonths"
+                  id="numberMonths"
+                  className="mt-2"
+                  onChange={this.onChange}
+                >
+                  <option>Seleccionar meses</option>
+                  {arrayMonths &&
+                    arrayMonths.map((item, index) => {
+                      return (
+                        <option key={index} value={item}>
+                          {`Últimos ${item} meses`}
+                        </option>
+                      );
+                    })}
+                </Input>
               </CardBody>
             </Card>
           </Col>
           <Col lg={7} md={12} sm={12}>
             <TableModalAutonomia
               tarjetasFiltro1={arrayAcumFinal}
-              fechas={fechasTarjetasConvertidasUnicas}
+              fechas={fechastarjetasUnicasRangoCut}
             ></TableModalAutonomia>
 
             <Card>

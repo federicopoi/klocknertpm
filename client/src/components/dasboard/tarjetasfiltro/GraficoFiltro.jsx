@@ -14,6 +14,7 @@ export class GraficoFiltro extends Component {
       color: "",
       equipo: "",
       prioridad: "",
+      numberMonths: "12",
       colorHex: "#EAA842",
     };
     this.toggleDataSeries = this.toggleDataSeries.bind(this);
@@ -59,6 +60,16 @@ export class GraficoFiltro extends Component {
         colorHex: "#EAA842",
       });
     }
+  };
+
+  handleChange = (e) => {
+    e.target.value === "Seleccionar meses"
+      ? this.setState({
+          [e.target.name]: 12,
+        })
+      : this.setState({
+          [e.target.name]: e.target.value,
+        });
   };
 
   render() {
@@ -118,17 +129,17 @@ export class GraficoFiltro extends Component {
 
     const fechastarjetasUnicasRango = [];
 
-    // if (endDate.isBefore(startDate)) {
-    //   throw "End date must be greated than start date.";
-    // }
-
     while (startDate.isBefore(endDate)) {
       fechastarjetasUnicasRango.push(startDate.format("YYYY-MM"));
       startDate.add(1, "month");
     }
 
+    const fechastarjetasUnicasRangoCut = fechastarjetasUnicasRango.slice(
+      Math.max(fechastarjetasUnicasRango.length - this.state.numberMonths, 0)
+    );
+
     // Numero total de tarjetas de cada mes (no acumulado)
-    let array = fechastarjetasUnicasRango.sort().map((item, index) => {
+    let array = fechastarjetasUnicasRangoCut.sort().map((item, index) => {
       return newFilter.filter(
         ({ estado, fecha, color, equipo }) =>
           fecha.slice(0, 7) === item.slice(0, 7)
@@ -141,7 +152,7 @@ export class GraficoFiltro extends Component {
 
     // Datos para el grafico
     const FiltroAcumuladasAbiertasData = [
-      fechastarjetasUnicasRango.sort().map((item, index) => {
+      fechastarjetasUnicasRangoCut.sort().map((item, index) => {
         return {
           x: new Date(
             parseInt(item.slice(0, 4)),
@@ -155,12 +166,15 @@ export class GraficoFiltro extends Component {
     // Formulas para "Filtro acumuladas cerradas"
 
     // Numero total de tarjetas de cada mes (no acumulado)
-    let arrayCerradas = fechastarjetasUnicasRango.sort().map((item, index) => {
-      return newFilter.filter(
-        ({ estado, finReparacion, color, equipo }) =>
-          estado === "Cerrada" && finReparacion.slice(0, 7) === item.slice(0, 7)
-      ).length;
-    });
+    let arrayCerradas = fechastarjetasUnicasRangoCut
+      .sort()
+      .map((item, index) => {
+        return newFilter.filter(
+          ({ estado, finReparacion, color, equipo }) =>
+            estado === "Cerrada" &&
+            finReparacion.slice(0, 7) === item.slice(0, 7)
+        ).length;
+      });
 
     // Acumulado de tarjetas por mes
     const arrTarjetasFiltroAcumuladasCerradas = arrayCerradas.map(
@@ -170,7 +184,7 @@ export class GraficoFiltro extends Component {
 
     // Datos para el grafico
     const FiltroAcumuladasAbiertasDataCerradas = [
-      fechastarjetasUnicasRango.sort().map((item, index) => {
+      fechastarjetasUnicasRangoCut.sort().map((item, index) => {
         return {
           x: new Date(
             parseInt(item.slice(0, 4)),
@@ -184,7 +198,7 @@ export class GraficoFiltro extends Component {
     // Formulas para "Porcentaje acumuladas cerradas porcentaje"
 
     // Numero total de tarjetas de cada mes (no acumulado)
-    let arrayCerradasPorcentaje = fechastarjetasUnicasRango
+    let arrayCerradasPorcentaje = fechastarjetasUnicasRangoCut
       .sort()
       .map((item, index) => {
         return newFilter.filter(
@@ -202,7 +216,7 @@ export class GraficoFiltro extends Component {
     // Datos para el grafico de cerradas porcentaje
 
     const FiltroAcumuladasAbiertasDataCerradasPorcentaje = [
-      fechastarjetasUnicasRango.map((item, index) => {
+      fechastarjetasUnicasRangoCut.map((item, index) => {
         return {
           x: new Date(
             parseInt(item.slice(0, 4)),
@@ -215,6 +229,14 @@ export class GraficoFiltro extends Component {
         };
       }),
     ];
+
+    const arrayMonths = [];
+
+    for (let i = 1; i < fechastarjetasUnicasRango.length + 1; i++) {
+      arrayMonths.push(i);
+    }
+
+    arrayMonths.reverse();
 
     CanvasJS.addCultureInfo("es", {
       decimalSeparator: ",", // Observe ToolTip Number Format
@@ -304,6 +326,23 @@ export class GraficoFiltro extends Component {
                   options={options}
                   onRef={(ref) => (this.chart = ref)}
                 />
+                <Input
+                  type="select"
+                  name="numberMonths"
+                  id="numberMonths"
+                  className="mt-2"
+                  onChange={this.onChange}
+                >
+                  <option>Seleccionar meses</option>
+                  {arrayMonths &&
+                    arrayMonths.map((item, index) => {
+                      return (
+                        <option key={index} value={item}>
+                          {`Últimos ${item} meses`}
+                        </option>
+                      );
+                    })}
+                </Input>
               </CardBody>
             </Card>
           </Col>
@@ -315,12 +354,11 @@ export class GraficoFiltro extends Component {
               tarjetasmesabiertas={array}
               tarjetasmescerradas={arrayCerradas}
               color={this.state.color}
-              fechas={fechastarjetasUnicasRango}
+              fechas={fechastarjetasUnicasRangoCut}
             ></TableModal>
 
             <Card>
               <CardBody>
-                {" "}
                 <h3>Filtros</h3>
                 <Label for="color">Color</Label>
                 <Input
@@ -335,7 +373,9 @@ export class GraficoFiltro extends Component {
                   <option>Amarilla</option>
                   <option>Verde</option>
                 </Input>
-                <Label for="equipo">Equipo</Label>
+                <Label for="equipo" className="mt-2">
+                  Equipo
+                </Label>
                 <Input
                   type="select"
                   name="equipo"
@@ -347,7 +387,9 @@ export class GraficoFiltro extends Component {
                     return <option key={index}>{item}</option>;
                   })}
                 </Input>
-                <Label for="prioridad">Prioridad</Label>
+                <Label for="prioridad" className="mt-2">
+                  Prioridad
+                </Label>
                 <Input
                   type="select"
                   name="prioridad"

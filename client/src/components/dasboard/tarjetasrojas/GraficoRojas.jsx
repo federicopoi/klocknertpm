@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import CanvasJSReact from "../canvasjs.react";
 import moment from "moment";
-import { Row, Col, Card, CardBody } from "reactstrap";
+import { Row, Col, Card, CardBody, Input } from "reactstrap";
 import TableModal from "../tablemodal/TableModal";
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 var CanvasJS = CanvasJSReact.CanvasJS;
@@ -9,6 +9,9 @@ var CanvasJS = CanvasJSReact.CanvasJS;
 export class GraficoRojas extends Component {
   constructor() {
     super();
+    this.state = {
+      numberMonths: "12",
+    };
     this.toggleDataSeries = this.toggleDataSeries.bind(this);
   }
   toggleDataSeries(e) {
@@ -19,6 +22,16 @@ export class GraficoRojas extends Component {
     }
     this.chart.render();
   }
+
+  onChange = (e) => {
+    e.target.value === "Seleccionar meses"
+      ? this.setState({
+          [e.target.name]: 12,
+        })
+      : this.setState({
+          [e.target.name]: e.target.value,
+        });
+  };
 
   render() {
     const { tarjetas } = this.props;
@@ -60,8 +73,12 @@ export class GraficoRojas extends Component {
       startDate.add(1, "month");
     }
 
+    const fechastarjetasUnicasRangoCut = fechastarjetasUnicasRango.slice(
+      Math.max(fechastarjetasUnicasRango.length - this.state.numberMonths, 0)
+    );
+
     // Numero total de tarjetas de cada mes (no acumulado)
-    let array = fechastarjetasUnicasRango.sort().map((item, index) => {
+    let array = fechastarjetasUnicasRangoCut.sort().map((item, index) => {
       return tarjetas.filter(
         ({ estado, fecha, color }) =>
           color === "Roja" && fecha.slice(0, 7) === item.slice(0, 7)
@@ -74,7 +91,7 @@ export class GraficoRojas extends Component {
 
     // Datos para el grafico
     const RojasAcumuladasAbiertasData = [
-      fechastarjetasUnicasRango.sort().map((item, index) => {
+      fechastarjetasUnicasRangoCut.sort().map((item, index) => {
         return {
           x: new Date(
             parseInt(item.slice(0, 4)),
@@ -88,14 +105,16 @@ export class GraficoRojas extends Component {
     // Formulas para "Rojas acumuladas cerradas"
 
     // Numero total de tarjetas de cada mes (no acumulado)
-    let arrayCerradas = fechastarjetasUnicasRango.sort().map((item, index) => {
-      return tarjetas.filter(
-        ({ estado, finReparacion, color }) =>
-          color === "Roja" &&
-          estado === "Cerrada" &&
-          finReparacion.slice(0, 7) === item.slice(0, 7)
-      ).length;
-    });
+    let arrayCerradas = fechastarjetasUnicasRangoCut
+      .sort()
+      .map((item, index) => {
+        return tarjetas.filter(
+          ({ estado, finReparacion, color }) =>
+            color === "Roja" &&
+            estado === "Cerrada" &&
+            finReparacion.slice(0, 7) === item.slice(0, 7)
+        ).length;
+      });
 
     // Acumulado de tarjetas por mes
     const arrTarjetasRojasAcumuladasCerradas = arrayCerradas.map(
@@ -105,7 +124,7 @@ export class GraficoRojas extends Component {
 
     // Datos para el grafico
     const RojasAcumuladasAbiertasDataCerradas = [
-      fechastarjetasUnicasRango.sort().map((item, index) => {
+      fechastarjetasUnicasRangoCut.sort().map((item, index) => {
         return {
           x: new Date(
             parseInt(item.slice(0, 4)),
@@ -119,7 +138,7 @@ export class GraficoRojas extends Component {
     // Formulas para "Porcentaje acumuladas cerradas porcentaje"
 
     // Numero total de tarjetas de cada mes (no acumulado)
-    let arrayCerradasPorcentaje = fechastarjetasUnicasRango
+    let arrayCerradasPorcentaje = fechastarjetasUnicasRangoCut
       .sort()
       .map((item, index) => {
         return tarjetas.filter(
@@ -138,7 +157,7 @@ export class GraficoRojas extends Component {
     // Datos para el grafico de cerradas porcentaje
 
     const RojasAcumuladasAbiertasDataCerradasPorcentaje = [
-      fechastarjetasUnicasRango.map((item, index) => {
+      fechastarjetasUnicasRangoCut.map((item, index) => {
         return {
           x: new Date(
             parseInt(item.slice(0, 4)),
@@ -151,6 +170,14 @@ export class GraficoRojas extends Component {
         };
       }),
     ];
+
+    const arrayMonths = [];
+
+    for (let i = 1; i < fechastarjetasUnicasRango.length + 1; i++) {
+      arrayMonths.push(i);
+    }
+
+    arrayMonths.reverse();
 
     CanvasJS.addCultureInfo("es", {
       decimalSeparator: ",", // Observe ToolTip Number Format
@@ -241,6 +268,23 @@ export class GraficoRojas extends Component {
                   options={options}
                   onRef={(ref) => (this.chart = ref)}
                 />
+                <Input
+                  type="select"
+                  name="numberMonths"
+                  id="numberMonths"
+                  className="mt-2"
+                  onChange={this.onChange}
+                >
+                  <option>Seleccionar meses</option>
+                  {arrayMonths &&
+                    arrayMonths.map((item, index) => {
+                      return (
+                        <option key={index} value={item}>
+                          {`Últimos ${item} meses`}
+                        </option>
+                      );
+                    })}
+                </Input>
               </CardBody>
             </Card>
           </Col>
@@ -252,7 +296,7 @@ export class GraficoRojas extends Component {
               tarjetasmesabiertas={array}
               tarjetasmescerradas={arrayCerradas}
               color="Rojas"
-              fechas={fechastarjetasUnicasRango}
+              fechas={fechastarjetasUnicasRangoCut}
             ></TableModal>
           </Col>
         </Row>

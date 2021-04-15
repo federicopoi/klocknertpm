@@ -18,12 +18,30 @@ const VersionControlModal = (props) => {
         onClick={toggle}
         style={{ cursor: "pointer" }}
       >
-        v. 1.2.3
+        v. 1.3.0
       </p>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Control de Versión</ModalHeader>
         <ModalBody>
           <ListGroup>
+            <h6 style={{ fontWeight: "bold" }} className="mb-3">
+              Versión 1.3.0 | 15/04/21
+            </h6>
+            <div class="row">
+              <div class="span12">
+                <div class="inside">
+                  <Container>
+                    <div class="entry-content">
+                      <p>&#9642; Tablas mis tarjetas mejorada.</p>
+                      <p>
+                        &#9642; Graficos muestran ultimos 12 meses para mejor
+                        visualización.
+                      </p>
+                    </div>
+                  </Container>
+                </div>
+              </div>
+            </div>
             <h6 style={{ fontWeight: "bold" }} className="mb-3">
               Versión 1.2.3 | 28/02/21
             </h6>
